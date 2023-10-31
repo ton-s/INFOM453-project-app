@@ -1,33 +1,60 @@
 {% load static %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>EcoTherm</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- One file includes all the Font Awesome Free icons and utilities -->
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
     <!-- CSS -->
 </head>
 <body>
 
     <div id="container">
         <div id="menu">
-            <h2>Maison</h2>
+            <p class="title">Maison</p>
             <nav>
-                <a class="btn" href="">Accueil</a>
-                <a class="btn" href="">Chambre</a>
-                <a class="btn" href="">Salon</a>
-                <a class="btn" href="">Cuisine</a>
-                <a class="btn" href="">Salle de bain</a>
+                <a class="btn" href="">
+                    <i class="fa-solid fa-house fa-fw"></i>
+                    <span>Accueil</span>
+                </a>
+                <a class="btn" href="">
+                    <i class="fa-solid fa-chart-simple fa-faw"></i>
+                    <span>Consommation</span>
+                </a>
+            </nav>
+
+            <p class="title-2">Pièces</p>
+            <nav id="nav-room">
+                <a class="btn" href="">
+                    <i class="fa-solid fa-bed fa-fw"></i>
+                    <span>Chambre</span>
+                </a>
+                <a class="btn" href="">
+                    <i class="fa-solid fa-couch fa-fw"></i>
+                    <span>Salon</span>
+                </a>
+                <a class="btn" href="">
+                    <i class="fa-solid fa-utensils fa-fw"></i>
+                    <span>Cuisine</span>
+                </a>
+                <a class="btn" href="">
+                    <i class="fa-solid fa-bath fa-faw"></i>
+                    <span>Salle de bain</span>
+                </a>
             </nav>
         </div>
-        <div id="content">
 
+        <div id="content">
+            <p class="title">Lien</p>
+            {% block content %}{% endblock %}
         </div>
     </div>
 
