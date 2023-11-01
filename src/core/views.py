@@ -11,4 +11,4 @@ def index(request):
     #
     # print(data)
 
-    return render(request, 'base.html')
+    return render(request, 'core/home.html')
