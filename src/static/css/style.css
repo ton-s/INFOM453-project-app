@@ -51,6 +51,7 @@ a {
     padding: 50px 25px 0;
     background-color: var(--color-background);
     position: fixed;
+    transition: 0.8s ease;
 }
 
 #menu .title-2 {
@@ -84,12 +85,39 @@ nav a span {
 
 @media screen and (max-width: 1100px) {
     #menu {
-        display: none;
+        position: fixed;
+        width: 100%;
+        z-index: 1;
+        left:-600px
+    }
+
+    #burger-menu-open, #burger-menu-close {
+        margin-bottom: 20px;
+    }
+
+    #burger-menu-open {
+        display: block !important;
+    }
+
+    #burger-menu-close {
+        display: flex !important;
+        justify-content: flex-end;
     }
 
     #content {
         width: 100%;
+        padding-top: 40px;
     }
+}
+
+/* BURGER MENU */
+#burger-menu-open, #burger-menu-close {
+    display: none;
+    cursor: pointer;
+}
+
+#menu.active {
+    left: 0;
 }
 
 /**** CORE ****/
@@ -98,7 +126,6 @@ nav a span {
 
 #content-info {
     height: 12vh;
-    padding: 5px;
     display: flex;
     justify-content: flex-start;
     margin-top: 15px;
@@ -108,13 +135,13 @@ nav a span {
 }
 
 .info {
-    height: 100%;
+    height: 55px;
     border-radius: 8px;
     background-color: var(--color-btn);
 }
 
 .info .type, .info .data {
-    padding: 6px 14px 6px;
+    padding: 8px 12px 8px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -142,21 +169,30 @@ nav a span {
 }
 
 #city {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+}
+
+#consommation {
+    background-color: var(--color-txt);
+    transition: 0.8s ease;
+}
+
+#consommation:hover {
+    opacity: 0.6;
 }
 
 
 /* WIDGET */
 
 #content-widget {
-    margin-top: 45px;
+    margin-top: 25px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
 .widget {
-    background-color: var(--color-txt);
+    background-color: #fffffe;
     height: 25vh;
     width: 550px;
     margin-bottom: 30px;
@@ -169,8 +205,12 @@ nav a span {
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.widget:hover, .info:hover {
+.widget:hover {
     transform: scale(1.04);
+}
+
+.widget span {
+    color: var(--color-txt);
 }
 
 

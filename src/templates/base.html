@@ -18,7 +18,9 @@
 <body>
 
     <div id="container">
+
         <div id="menu">
+            <div id="burger-menu-close"><i class="fa-solid fa-xmark fa-lg"></i></div>
             <p class="title">Maison</p>
             <nav>
                 <a class="btn" href="">
@@ -53,10 +55,12 @@
         </div>
 
         <div id="content">
+            <div id="burger-menu-open"><i class="fa-solid fa-bars fa-lg"></i></div>
             <p class="title">Accueil</p>
             {% block content %}{% endblock %}
         </div>
     </div>
 
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
