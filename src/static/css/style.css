@@ -90,7 +90,7 @@ nav a span {
         position: fixed;
         width: 100%;
         z-index: 1;
-        left:-600px
+        left: -600px
     }
 
     #burger-menu-open, #burger-menu-close {
@@ -138,7 +138,14 @@ nav a span {
 .info {
     height: 55px;
     border-radius: 8px;
-    background-color: var(--color-btn);
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+    background-color: var(--color-headline);
+}
+
+#weather, #season, #consommation {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 15px;
 }
 
 .info .type, .info .data {
@@ -146,13 +153,6 @@ nav a span {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-
-#weather, #consommation {
-    display: flex;
-    justify-content: space-between;
-    margin-right: 15px;
 }
 
 .type {
@@ -174,13 +174,48 @@ nav a span {
 }
 
 #consommation {
-    background-color: var(--color-txt);
-    transition: 0.8s ease;
+    background: var(--color-btn);
+    transition: 0.8s;
 }
 
 #consommation:hover {
-    opacity: 0.6;
+    filter: brightness(0.7);
 }
+
+/*.switch {*/
+/*    display: flex;*/
+/*    justify-content: flex-start;*/
+/*    align-items: center;*/
+/*    background: black;*/
+/*    height: 55px;*/
+/*    min-width: 130px;*/
+/*    border-radius: 8px;*/
+/*    padding: 8px 12px 8px;*/
+/*}*/
+
+/*!* Hide default HTML checkbox *!*/
+/*.switch input {*/
+/*    opacity: 0;*/
+/*    width: 0;*/
+/*    height: 0;*/
+/*}*/
+
+/*.slider {*/
+/*    cursor: pointer;*/
+/*    box-shadow: inset 8px -4px 0px 0px #fff000;*/
+/*    height: 20px;*/
+/*    width: 20px;*/
+/*    border-radius: 50%;*/
+/*}*/
+
+/*.slider {*/
+/*    box-shadow: inset 15px -4px 0px 15px #fff000;*/
+
+/*}*/
+
+/*.switch input:checked + .slider {*/
+/*    background: red;*/
+/*}*/
 
 
 /* WIDGET */
@@ -254,15 +289,15 @@ nav a span {
 /* HEATING */
 
 .btn-heating {
-    background: var(--color-headline);
+    background: var(--color-btn);
     color: white;
-    padding: 10px 12px 10px;
+    padding: 10px 12.5px 10px;
     border-radius: 50%;
-    transition: 0.8s ease;
+    transition: 0.8s;
 }
 
 .btn-heating:hover {
-    opacity: 0.6;
+    filter: brightness(0.7);
 }
 
 .block:has(.btn-heating) {
@@ -286,4 +321,6 @@ nav a span {
 }
 
 /* LIGHTING */
+
+/*facto avec #temp-ext and temp-int si idem*/
 
