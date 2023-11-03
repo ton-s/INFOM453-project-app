@@ -4,7 +4,7 @@
 
     <div id="content-info">
         <div id="weather" class="info">
-           <div class="type"><i class="fa-solid fa-cloud"></i></div>
+            <div class="type"><i class="fa-solid fa-cloud"></i></div>
             <div class="data">
                 <div id="temperature">20°C</div>
                 <div id="city"><i class="fa-solid fa-location-dot fa-2xs"></i> Namur</div>
@@ -20,20 +20,13 @@
     </div>
 
     <div id="content-widget">
-        <a href="{% url 'room' 'chambre' %}" class="widget">
-            <span>Chambre</span>
-            <span>27°C</span>
-            <span>Notification</span>
-        </a>
-        <a href="" class="widget">
-            <span>Salon</span>
-        </a>
-        <a href="" class="widget">
-            <span>Cuisine</span>
-        </a>
-        <a href="" class="widget">
-            <span>Salle de Bain</span>
-        </a>
+        {% for room in rooms %}
+            <a href="{% url 'room' 'chambre' %}" class="widget">
+                <span>{{ room.name }}</span>
+                <span>27°C</span>
+                <span>Notification</span>
+            </a>
+        {% endfor %}
     </div>
 
 {% endblock %}

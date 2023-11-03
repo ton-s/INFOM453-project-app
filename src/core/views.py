@@ -1,6 +1,9 @@
 from django.shortcuts import render
 import requests
 
+from rooms.models import Room
+
+
 def index(request):
 
     # key = "3448cb1dd62b9758038f490877c25fb6"
@@ -11,4 +14,7 @@ def index(request):
     #
     # print(data)
 
-    return render(request, 'core/home.html')
+    rooms = Room.objects.all()
+    print(rooms)
+
+    return render(request, 'core/home.html', context={'rooms': rooms})

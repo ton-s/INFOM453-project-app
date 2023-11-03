@@ -6,6 +6,7 @@
     --color-txt: #2d334a;
     --color-btn: #ffd803;
     --color-background: #e3f6f5;
+    --color-white: #fffffe;
 }
 
 * {
@@ -21,7 +22,7 @@ a {
 }
 
 
-.btn:hover {
+.btn:hover, .active-link {
     background-color: var(--color-btn);
     color: white;
     border-radius: 8px;
@@ -38,6 +39,7 @@ a {
     font-weight: 600;
     color: var(--color-txt);
 }
+
 
 /**** BASE ****/
 
@@ -191,7 +193,7 @@ nav a span {
 }
 
 .widget {
-    background-color: #fffffe;
+    background-color: var(--color-white);
     height: 25vh;
     width: 550px;
     margin-bottom: 30px;
@@ -212,4 +214,76 @@ nav a span {
     color: var(--color-txt);
 }
 
+/**** ROOMS ****/
+
+.block {
+    background-color: var(--color-white);
+    color: var(--color-txt);
+    height: 20vh;
+    width: 260px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.title-block {
+    margin-bottom: 30px;
+}
+
+
+#heating, #lighting {
+    margin-top: 45px;
+}
+
+#heating > div, #lighting > div {
+    display: flex;
+}
+
+#heating .title-2, #lighting .title-2 {
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width: 1100px) {
+    #heating > div, #lighting > div {
+        display: block;
+    }
+}
+
+/* HEATING */
+
+.btn-heating {
+    background: var(--color-headline);
+    color: white;
+    padding: 10px 12px 10px;
+    border-radius: 50%;
+    transition: 0.8s ease;
+}
+
+.btn-heating:hover {
+    opacity: 0.6;
+}
+
+.block:has(.btn-heating) {
+    display: flex;
+    align-items: center;
+}
+
+#temp-ext, #temp-int {
+    margin-bottom: 5px;
+}
+
+#temp-ext span, #temp-int span {
+    margin: 0 10px 0;
+    font-weight: 900;
+}
+
+#temp-value {
+    font-size: 1.2rem;
+    margin: 0 5px 0;
+    font-weight: 900;
+}
+
+/* LIGHTING */
 

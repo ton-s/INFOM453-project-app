@@ -23,11 +23,11 @@
             <div id="burger-menu-close"><i class="fa-solid fa-xmark fa-lg"></i></div>
             <p class="title">Maison</p>
             <nav>
-                <a class="btn" href="">
+                <a class="btn {% if request.resolver_match.url_name == 'index' %} active-link {% endif %}" href="{% url 'index' %}">
                     <i class="fa-solid fa-house fa-fw"></i>
-                    <span>Accueil</span>
+                    <span>Tableau de bord</span>
                 </a>
-                <a class="btn" href="">
+                <a class="btn {% if request.resolver_match.url_name == 'consommation' %} active-link {% endif %}" href="">
                     <i class="fa-solid fa-chart-simple fa-faw"></i>
                     <span>Consommation</span>
                 </a>
@@ -35,19 +35,19 @@
 
             <p class="title-2">Pièces</p>
             <nav id="nav-room">
-                <a class="btn" href="">
+                <a class="btn {% if request.resolver_match.kwargs.room_name == 'chambre' %} active-link {% endif %}" href="">
                     <i class="fa-solid fa-bed fa-fw"></i>
                     <span>Chambre</span>
                 </a>
-                <a class="btn" href="">
+                <a class="btn {% if request.resolver_match.kwargs.room_name == 'salon' %} active-link {% endif %}" href="">
                     <i class="fa-solid fa-couch fa-fw"></i>
                     <span>Salon</span>
                 </a>
-                <a class="btn" href="">
+                <a class="btn {% if request.resolver_match.kwargs.room_name == 'cuisine' %} active-link {% endif %}" href="">
                     <i class="fa-solid fa-utensils fa-fw"></i>
                     <span>Cuisine</span>
                 </a>
-                <a class="btn" href="">
+                <a class="btn {% if request.resolver_match.kwargs.room_name == 'salle de bain' %} active-link {% endif %}" href="">
                     <i class="fa-solid fa-bath fa-faw"></i>
                     <span>Salle de bain</span>
                 </a>
@@ -56,7 +56,14 @@
 
         <div id="content">
             <div id="burger-menu-open"><i class="fa-solid fa-bars fa-lg"></i></div>
-            <p class="title">Accueil</p>
+            <p class="title">{% if not request.resolver_match.kwargs %}
+                Tableau de bord
+                {% else %}
+                {{ request.resolver_match.kwargs.room_name|capfirst }}
+            {% endif %}
+
+
+            </p>
             {% block content %}{% endblock %}
         </div>
     </div>

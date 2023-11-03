@@ -1,7 +1,7 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render
 
 def room(request, room_name):
 
 
-    return HttpResponse("<h1>Yo!</h1>")
+    return render(request, 'rooms/room.html', context={'room': room_name})
 
