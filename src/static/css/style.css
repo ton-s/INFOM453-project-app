@@ -113,7 +113,6 @@ nav a span {
 /* BURGER MENU */
 #burger-menu-open, #burger-menu-close {
     display: none;
-    cursor: pointer;
 }
 
 #menu.active {
