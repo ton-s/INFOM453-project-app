@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
-# Create your views here.
+def room(request, room_name):
+
+
+    return HttpResponse("<h1>Yo!</h1>")
+
