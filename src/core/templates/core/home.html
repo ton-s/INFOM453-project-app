@@ -18,6 +18,10 @@
             </div>
         </div>
 
+        <a href="#" id="day-night" class="info">
+            <div>Jour</div>
+        </a>
+
         <a href="#" id="consommation" class="info">
             <div class="type"><i class="fa-solid fa-chart-simple fa-sm"></i></div>
             <div class="data">
@@ -25,17 +29,12 @@
             </div>
         </a>
 
-{#        <label class="switch">#}
-{#            <input type="checkbox">#}
-{#            <span class="slider"></span>#}
-{#        </label>#}
-
     </div>
 
     <div id="content-widget">
         {% for room in rooms %}
-            <a href="{% url 'room' 'chambre' %}" class="widget">
-                <span>{{ room.name }}</span>
+            <a href="{% url 'room' room.slug %}" class="widget">
+                <span>{{ room.name|capfirst }}</span>
                 <span>27°C</span>
                 <span>Notification</span>
             </a>

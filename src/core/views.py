@@ -15,6 +15,5 @@ def index(request):
     # print(data)
 
     rooms = Room.objects.all()
-    print(rooms)
 
     return render(request, 'core/home.html', context={'rooms': rooms})

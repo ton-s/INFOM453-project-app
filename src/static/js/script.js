@@ -1,17 +1,39 @@
 // Burger menu
 
-var menu = document.getElementById("menu");
-var openBtn = document.getElementById("burger-menu-open");
-var closeBtn = document.getElementById("burger-menu-close");
+const menu = document.getElementById("menu");
+const openBtn = document.getElementById("burger-menu-open");
+const closeBtn = document.getElementById("burger-menu-close");
 
-openBtn.onclick = openNav;
-closeBtn.onclick = closeNav;
-
-function openNav() {
-  menu.classList.add("active");
+openBtn.onclick = function () {
+    menu.classList.add("active");
 }
 
-function closeNav() {
-  menu.classList.remove("active");
+closeBtn.onclick = function () {
+    menu.classList.remove("active");
 }
+
+// Btn day/night
+
+const dayNightBtn = document.getElementById("day-night");
+
+dayNightBtn.onclick = function () {
+
+    // Get content of btn
+    let content = dayNightBtn.firstElementChild
+
+    if(!dayNightBtn.classList.contains("day-night-active")) {
+        dayNightBtn.classList.add("day-night-active")
+        content.textContent = "Nuit"
+    } else {
+        dayNightBtn.classList.remove("day-night-active")
+        content.textContent = "Jour"
+    }
+
+}
+
+
+
+
+
+
 
