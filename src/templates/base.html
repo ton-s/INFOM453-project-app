@@ -17,57 +17,63 @@
 </head>
 <body>
 
-    <div id="container">
+<div id="container">
 
-        <div id="menu">
-            <div id="burger-menu-close"><i class="fa-solid fa-xmark fa-lg"></i></div>
-            <p class="title">Maison</p>
-            <nav>
-                <a class="btn {% if request.resolver_match.url_name == 'index' %} active-link {% endif %}" href="{% url 'index' %}">
-                    <i class="fa-solid fa-house fa-fw"></i>
-                    <span>Tableau de bord</span>
-                </a>
-                <a class="btn {% if request.resolver_match.url_name == 'consommation' %} active-link {% endif %}" href="">
-                    <i class="fa-solid fa-chart-simple fa-faw"></i>
-                    <span>Consommation</span>
-                </a>
-            </nav>
+    <div id="menu">
+        <div id="burger-menu-close"><i class="fa-solid fa-xmark fa-lg"></i></div>
+        <p class="title">Maison</p>
+        <nav>
+            <a class="btn {% if request.resolver_match.url_name == 'index' %} active-link {% endif %}"
+               href="{% url 'index' %}">
+                <i class="fa-solid fa-house fa-fw"></i>
+                <span>Tableau de bord</span>
+            </a>
+            <a class="btn {% if request.resolver_match.url_name == 'consommation' %} active-link {% endif %}" href="">
+                <i class="fa-solid fa-chart-simple fa-faw"></i>
+                <span>Consommation</span>
+            </a>
+        </nav>
 
-            <p class="title-2">Pièces</p>
-            <nav id="nav-room">
-                <a class="btn {% if request.resolver_match.kwargs.slug == 'chambre' %} active-link {% endif %}" href="">
-                    <i class="fa-solid fa-bed fa-fw"></i>
-                    <span>Chambre</span>
+        <p class="title-2">Pièces</p>
+        <nav id="nav-room">
+            {% for room in rooms %}
+                <a class="btn {% if request.resolver_match.kwargs.slug == room.slug %} active-link {% endif %}"
+                   href="{% url 'room' room.slug %}">
+                    {% if room.slug == "chambre" %}
+                        <i class="fa-solid fa-bed fa-fw"></i>
+                    {% elif room.slug == "salon" %}
+                        <i class="fa-solid fa-couch fa-fw"></i>
+                    {% elif room.slug == "cuisine" %}
+                        <i class="fa-solid fa-utensils fa-fw"></i>
+                    {% else %}
+                        <i class="fa-solid fa-bath fa-faw"></i>
+                    {% endif %}
+                    <span>{{ room.name|capfirst }}</span>
                 </a>
-                <a class="btn {% if request.resolver_match.kwargs.slug == 'salon' %} active-link {% endif %}" href="">
-                    <i class="fa-solid fa-couch fa-fw"></i>
-                    <span>Salon</span>
-                </a>
-                <a class="btn {% if request.resolver_match.kwargs.slug == 'cuisine' %} active-link {% endif %}" href="">
-                    <i class="fa-solid fa-utensils fa-fw"></i>
-                    <span>Cuisine</span>
-                </a>
-                <a class="btn {% if request.resolver_match.kwargs.slug == 'salle-de-bain' %} active-link {% endif %}" href="">
-                    <i class="fa-solid fa-bath fa-faw"></i>
-                    <span>Salle de bain</span>
-                </a>
-            </nav>
-        </div>
 
-        <div id="content">
-            <div id="burger-menu-open"><i class="fa-solid fa-bars fa-lg"></i></div>
-            <p class="title">{% if not request.resolver_match.kwargs %}
-                Tableau de bord
-                {% else %}
-                {{ request.resolver_match.kwargs.slug|capfirst }}
-            {% endif %}
-
-
-            </p>
-            {% block content %}{% endblock %}
-        </div>
+            {% endfor %}
+        </nav>
     </div>
 
-    <script src="{% static 'js/script.js' %}"></script>
+    <div id="content">
+        <div id="burger-menu-open"><i class="fa-solid fa-bars fa-lg"></i></div>
+        <p class="title">{% if not request.resolver_match.kwargs %}
+            {% if request.resolver_match.url_name == 'index' %}
+                Tableau de bord
+            {% else %}
+                Consommation
+            {% endif %}
+        {% else %}
+            {{ request.resolver_match.kwargs.slug|capfirst }}
+        {% endif %}
+
+
+        </p>
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+<script src="{% static 'js/script.js' %}"></script>
+<script src="https://cdn.canvasjs.com/ga/canvasjs.min.js"></script>
 </body>
 </html>
