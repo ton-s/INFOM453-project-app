@@ -18,18 +18,16 @@ const dayNightBtn = document.getElementById("day-night");
 
 dayNightBtn.onclick = function () {
 
-    // Get content of btn
-    let content = dayNightBtn.firstElementChild
+    const content = dayNightBtn.querySelector("i");
 
-    if(!dayNightBtn.classList.contains("day-night-active")) {
-        dayNightBtn.classList.add("day-night-active")
-        content.textContent = "Nuit"
+    if (!dayNightBtn.classList.toggle("day-night-active")) {
+        content.outerHTML = "<i class=\"fa-solid fa-sun fa-xl\"></i>";
     } else {
-        dayNightBtn.classList.remove("day-night-active")
-        content.textContent = "Jour"
+        content.outerHTML = "<i class=\"fa-regular fa-moon fa-xl\"></i>";
     }
 
 }
+
 
 
 
