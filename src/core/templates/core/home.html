@@ -19,7 +19,7 @@
         </div>
 
         <a href="#" id="day-night" class="info">
-            <div>Jour</div>
+            <div><i class="fa-solid fa-sun fa-xl"></i></div>
         </a>
 
         <a href="#" id="consommation" class="info">
@@ -34,9 +34,14 @@
     <div id="content-widget">
         {% for room in rooms %}
             <a href="{% url 'room' room.slug %}" class="widget">
-                <span>{{ room.name|capfirst }}</span>
-                <span>27°C</span>
-                <span>Notification</span>
+                <div>
+                    <span>{{ room.name|capfirst }}</span>
+                    <span><i class="fa-solid fa-lightbulb fa-sm"></i> On</span>
+                </div>
+                <div id="widget-data">
+                    <span>27°C</span>
+                    <span><i class="fa-solid fa-bell fa-lg"></i></span>
+                </div>
             </a>
         {% endfor %}
     </div>
