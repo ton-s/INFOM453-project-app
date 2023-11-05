@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 from thermo.settings import AUTH_USER_MODEL
@@ -17,12 +18,14 @@ class Room(models.Model):
             self.slug = slugify(self.name)
         super(Room, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse("room", kwargs={"slug": self.slug})
+
     def __str__(self):
         return f"{self.name}"
 
 
 class Device(models.Model):
-
     TYPE_CHOICES = [
         ("light", "capteur de luminosité"),
         ("temperature", "capteur de température"),
