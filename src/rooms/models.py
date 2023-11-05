@@ -20,12 +20,22 @@ class Room(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+
 class Device(models.Model):
-    type = models.CharField(max_length=128)
+
+    TYPE_CHOICES = [
+        ("light", "capteur de luminosité"),
+        ("temperature", "capteur de température"),
+        ("appliance", "capteur de consommation"),
+    ]
+
+    name = models.CharField(max_length=128)
+    type = models.CharField(max_length=128, choices=TYPE_CHOICES)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='devices')
 
     def __str__(self):
-        return f"{self.type}"
+        return f"{self.name} - {self.type}"
+
 
 class Lighting(models.Model):
     brightness_outside = models.FloatField()
@@ -35,7 +45,9 @@ class Lighting(models.Model):
     devices = models.ForeignKey(Device, on_delete=models.CASCADE, related_name='lightings')
 
     def __str__(self):
-        return f"{self.brightness_inside} ({self.timestamp})"
+        return f"Brightness inside: {self.brightness_inside}lm ({self.timestamp})"
+
+
 class Heating(models.Model):
     temperature_outside = models.FloatField()
     temperature_inside = models.FloatField()
@@ -43,9 +55,8 @@ class Heating(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     devices = models.ForeignKey(Device, on_delete=models.CASCADE, related_name='heating')
 
-
     def __str__(self):
-        return f"{self.temperature_inside} ({self.timestamp})"
+        return f"Temperature inside: {self.temperature_inside}°C ({self.timestamp})"
 
 
 class HomeAppliance(models.Model):
