@@ -11,6 +11,7 @@
                     <p class="int">t° int :<span>15°C</span></p>
                 </div>
             </div>
+
             <div class="block">
                 <div class="title-block"><i class="fa-solid fa-temperature-three-quarters"></i> Gestion température
                 </div>
@@ -20,6 +21,8 @@
                     <a href="" class="btn-heating"><i class="fa-solid fa-minus"></i></a>
                 </div>
             </div>
+
+            <div id="chartTemperature" class="chart"></div>
         </div>
     </div>
 
@@ -33,13 +36,67 @@
                     <p class="int">lum int : <span>200 lm</span></p>
                 </div>
             </div>
+
             <div class="block">
                 <div class="title-block"><i class="fa-solid fa-lightbulb"></i> Gestion luminosité</div>
                 <div class="data-block" style="text-align: center">
-                    <input type="range" min="0" max="100" value="50"/>
+                    <input id="light-value" type="range" min="0" max="100" value="50"/>
                 </div>
             </div>
+
+            <div id="chartLight" class="chart"></div>
         </div>
     </div>
+
+    <script>
+        window.onload = function () {
+            let chartTemperature = new CanvasJS.Chart("chartTemperature", {
+                theme: "light2", // "light1", "dark1", "dark2"
+                animationEnabled: true,
+                title: {
+                    text: "Température par heure",
+                    margin: 20
+                },
+                axisX: {
+                    title: "Heure",
+                    {#valueFormatString: "HH:mm",#}
+                },
+                axisY: {
+                    title: "Température"
+                },
+                data: [{
+                    type: "line",
+                    color: "#ffd803",
+                    dataPoints: {{ datapoints|safe }},
+                    toolTipContent: "Heure: {x}<br/>Température: {y} °C"
+                }]
+            });
+
+            let chartLight = new CanvasJS.Chart("chartLight", {
+                theme: "light2", // "light1", "dark1", "dark2"
+                animationEnabled: true,
+                title: {
+                    text: "Luminosité par heure",
+                    margin: 20
+                },
+                axisX: {
+                    title: "Heure"
+                },
+                axisY: {
+                    title: "Température"
+                },
+                data: [{
+                    type: "line",
+                    color: "#ffd803",
+                    dataPoints: {{ datapoints|safe }},
+                    toolTipContent: "Heure: {x}<br/>Température: {y} °C"
+                }]
+            });
+            chartTemperature.render();
+            chartLight.render()
+        }
+
+    </script>
+
 
 {% endblock %}
