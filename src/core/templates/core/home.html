@@ -4,10 +4,10 @@
 
     <div id="content-info">
         <div id="weather" class="info">
-            <div class="type"><i class="fa-solid fa-cloud"></i></div>
+            <div class="type"><img src="{{ weather.current.weather_icons|first }}"></div>
             <div class="data">
-                <div id="temperature">20°C</div>
-                <div id="city"><i class="fa-solid fa-location-dot fa-2xs"></i> Namur</div>
+                <div id="temperature">{{ weather.current.temperature }}°C</div>
+                <div id="city"><i class="fa-solid fa-location-dot fa-2xs"></i> {{ weather.location.name }}</div>
             </div>
         </div>
 
