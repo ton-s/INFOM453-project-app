@@ -7,6 +7,7 @@ from rooms.models import Room
 def index(request):
 
     weather = get_weather_data("Namur")
+    print(weather)
 
     rooms = Room.objects.all()
 

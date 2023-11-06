@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'fontawesomefree',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -74,6 +75,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'thermo.wsgi.application'
+ASGI_APPLICATION = 'thermo.asgi.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+
+    },
+}
 
 
 # Database

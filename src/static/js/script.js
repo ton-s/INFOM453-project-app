@@ -16,17 +16,20 @@ closeBtn.onclick = function () {
 
 const dayNightBtn = document.getElementById("day-night");
 
-dayNightBtn.onclick = function () {
+if (dayNightBtn) {
+    dayNightBtn.onclick = function () {
 
-    const content = dayNightBtn.querySelector("i");
+        const content = dayNightBtn.querySelector("i");
 
-    if (!dayNightBtn.classList.toggle("day-night-active")) {
-        content.outerHTML = "<i class=\"fa-solid fa-sun fa-xl\"></i>";
-    } else {
-        content.outerHTML = "<i class=\"fa-regular fa-moon fa-xl\"></i>";
+        if (!dayNightBtn.classList.toggle("day-night-active")) {
+            content.outerHTML = "<i class=\"fa-solid fa-sun fa-xl\"></i>";
+        } else {
+            content.outerHTML = "<i class=\"fa-regular fa-moon fa-xl\"></i>";
+        }
+
     }
-
 }
+
 
 
 
