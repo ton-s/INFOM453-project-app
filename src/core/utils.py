@@ -1,7 +1,7 @@
 import requests
 
 
-def get_weather_data(city):
+def get_weather_data(city:str ="Namur"):
     """Retrieves current weather data for a given city
 
     Parameters
