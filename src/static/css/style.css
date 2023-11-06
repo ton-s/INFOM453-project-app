@@ -155,9 +155,13 @@ nav a span {
     align-items: center;
 }
 
-.type {
+.type{
     font-size: 2rem;
     color: white;
+}
+
+.type img {
+    height: 100%;
 }
 
 .data {

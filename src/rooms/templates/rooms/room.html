@@ -59,17 +59,30 @@
                 },
                 axisX: {
                     title: "Heure",
+                    interval: 4,
+                    minimum: 0,
+                    maximum: 24,
                     {#valueFormatString: "HH:mm",#}
                 },
                 axisY: {
                     title: "Température"
                 },
                 data: [{
-                    type: "line",
+                    type: "spline",
                     color: "#ffd803",
                     dataPoints: {{ datapoints|safe }},
-                    toolTipContent: "Heure: {x}<br/>Température: {y} °C"
-                }]
+                    toolTipContent: "Heure: {x}<br/>Température: {y} °C",
+                    showInLegend: true,
+                    legendText: "intérieur"
+                }, {
+                    type: "spline",
+                    color: "#737373",
+                    dataPoints: {{ datapoints2|safe }},
+                    toolTipContent: "Heure: {x}<br/>Température: {y} °C",
+                    showInLegend: true,
+                    legendText: "extérieur"
+                }
+                ]
             });
 
             let chartLight = new CanvasJS.Chart("chartLight", {
