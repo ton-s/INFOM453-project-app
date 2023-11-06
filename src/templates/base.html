@@ -76,6 +76,18 @@
 <script src="{% static 'js/script.js' %}"></script>
 <script src="https://cdn.canvasjs.com/ga/canvasjs.min.js"></script>
 
+<script>
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host + '/ws/'
+    );
+
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+</script>
+
 </body>
 
 </html>
