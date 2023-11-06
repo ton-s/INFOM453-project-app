@@ -38,13 +38,21 @@ class Device(models.Model):
 
     def create_lighting(self, brightness_outside: float, brightness_inside: float,
                         brightness_desired: float = None) -> None:
-        lighting = Lighting(
+        Lighting.objects.create(
             brightness_outside=brightness_outside,
             brightness_inside=brightness_inside,
             brightness_desired=brightness_desired,
             devices=self,
         )
-        lighting.save()
+
+    def create_heating(self, temperature_outside: float, temperature_inside: float,
+                       temperature_desired: float = None) -> None:
+        Heating.objects.create(
+            temperature_outside=temperature_outside,
+            temperature_inside=temperature_inside,
+            temperature_desired=temperature_desired,
+            devices=self,
+        )
 
     def __str__(self):
         return f"{self.name} - {self.type}"
