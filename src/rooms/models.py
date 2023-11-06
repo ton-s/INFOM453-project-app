@@ -36,6 +36,16 @@ class Device(models.Model):
     type = models.CharField(max_length=128, choices=TYPE_CHOICES)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='devices')
 
+    def create_lighting(self, brightness_outside: float, brightness_inside: float,
+                        brightness_desired: float = None) -> None:
+        lighting = Lighting(
+            brightness_outside=brightness_outside,
+            brightness_inside=brightness_inside,
+            brightness_desired=brightness_desired,
+            devices=self,
+        )
+        lighting.save()
+
     def __str__(self):
         return f"{self.name} - {self.type}"
 
@@ -43,7 +53,7 @@ class Device(models.Model):
 class Lighting(models.Model):
     brightness_outside = models.FloatField()
     brightness_inside = models.FloatField()
-    brightness_desired = models.FloatField()
+    brightness_desired = models.FloatField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     devices = models.ForeignKey(Device, on_delete=models.CASCADE, related_name='lightings')
 
@@ -54,7 +64,7 @@ class Lighting(models.Model):
 class Heating(models.Model):
     temperature_outside = models.FloatField()
     temperature_inside = models.FloatField()
-    temperature_desired = models.FloatField()
+    temperature_desired = models.FloatField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     devices = models.ForeignKey(Device, on_delete=models.CASCADE, related_name='heating')
 
