@@ -36,7 +36,7 @@
 
         <p class="title-2">Pièces</p>
         <nav id="nav-room">
-            {% for room in rooms %}
+            {% for room in room_list %}
                 <a class="btn {% if request.resolver_match.kwargs.slug == room.slug %} active-link {% endif %}"
                    href="{% url 'room' room.slug %}">
                     {% if room.slug == "chambre" %}
@@ -64,7 +64,7 @@
                 Consommation
             {% endif %}
         {% else %}
-            {{ request.resolver_match.kwargs.slug|capfirst }}
+            {{ room.name }}
         {% endif %}
 
 
@@ -75,16 +75,7 @@
 
 <script src="{% static 'js/script.js' %}"></script>
 <script src="https://cdn.canvasjs.com/ga/canvasjs.min.js"></script>
-{#<script>#}
-{#        const chatSocket = new WebSocket(#}
-{#            'ws://'#}
-{#            + window.location.host + '/ws/'#}
-{#        );#}
-{##}
-{#        chatSocket.onclose = function (e) {#}
-{#            console.error('Chat socket closed unexpectedly');#}
-{#        };#}
-{##}
-{#    </script>#}
-{#</body>#}
+
+</body>
+
 </html>
