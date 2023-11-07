@@ -7,8 +7,8 @@
             <div class="block">
                 <div class="title-block"><i class="fa-regular fa-clipboard"></i> Température</div>
                 <div class="data-block">
-                    <p class="ext">t° ext :<span>10°C</span></p>
-                    <p class="int">t° int :<span>15°C</span></p>
+                    <p class="ext">t° ext :<span>{{ temperature_outside }}°C</span></p>
+                    <p class="int">t° int :<span>{{ temperature_inside }}°C</span></p>
                 </div>
             </div>
 
@@ -32,15 +32,15 @@
             <div class="block">
                 <div class="title-block"><i class="fa-regular fa-clipboard"></i> Luminosité</div>
                 <div class="data-block">
-                    <p class="ext">lum ext : <span>200 lm</span></p>
-                    <p class="int">lum int : <span>200 lm</span></p>
+                    <p class="ext">lum ext : <span>{{ brightness_outside }} lm</span></p>
+                    <p class="int">lum int : <span>{{ brightness_inside }} lm</span></p>
                 </div>
             </div>
 
             <div class="block">
                 <div class="title-block"><i class="fa-solid fa-lightbulb"></i> Gestion luminosité</div>
                 <div class="data-block" style="text-align: center">
-                    <input id="light-value" type="range" min="0" max="100" value="50"/>
+                    <input id="light-value" type="range" min="0" max="100" value="{{ brightness_inside }}"/>
                 </div>
             </div>
 
@@ -62,7 +62,6 @@
                     interval: 4,
                     minimum: 0,
                     maximum: 24,
-                    {#valueFormatString: "HH:mm",#}
                 },
                 axisY: {
                     title: "Température"
@@ -70,14 +69,16 @@
                 data: [{
                     type: "spline",
                     color: "#ffd803",
-                    dataPoints: {{ datapoints|safe }},
+                    dataPoints: {{ chart_data_1|safe }},
+                    xValueType: "dateTime",
                     toolTipContent: "Heure: {x}<br/>Température: {y} °C",
                     showInLegend: true,
                     legendText: "intérieur"
                 }, {
                     type: "spline",
                     color: "#737373",
-                    dataPoints: {{ datapoints2|safe }},
+                    dataPoints: {{ chart_data_1_threshold|safe }},
+                    xValueType: "dateTime",
                     toolTipContent: "Heure: {x}<br/>Température: {y} °C",
                     showInLegend: true,
                     legendText: "extérieur"
@@ -101,7 +102,7 @@
                 data: [{
                     type: "line",
                     color: "#ffd803",
-                    dataPoints: {{ datapoints|safe }},
+                    dataPoints: {{ chart_data_2|safe }},
                     toolTipContent: "Heure: {x}<br/>Température: {y} °C"
                 }]
             });
