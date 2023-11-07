@@ -7,8 +7,8 @@
             <div class="block">
                 <div class="title-block"><i class="fa-regular fa-clipboard"></i> Température</div>
                 <div class="data-block">
-                    <p class="ext">t° ext :<span>{{ temperature_outside }}°C</span></p>
-                    <p class="int">t° int :<span>{{ temperature_inside }}°C</span></p>
+                    <p class="ext">t° ext :<span>{{ temperature_outside|floatformat:"0" }}°C</span></p>
+                    <p class="int">t° int :<span>{{ temperature_inside|floatformat:"0" }}°C</span></p>
                 </div>
             </div>
 
@@ -32,15 +32,15 @@
             <div class="block">
                 <div class="title-block"><i class="fa-regular fa-clipboard"></i> Luminosité</div>
                 <div class="data-block">
-                    <p class="ext">lum ext : <span>{{ brightness_outside }} lm</span></p>
-                    <p class="int">lum int : <span>{{ brightness_inside }} lm</span></p>
+                    <p class="ext">lum ext : <span>{{ brightness_outside|floatformat:"0" }}%</span></p>
+                    <p class="int">lum int : <span>{{ brightness_inside|floatformat:"0"}}%</span></p>
                 </div>
             </div>
 
             <div class="block">
                 <div class="title-block"><i class="fa-solid fa-lightbulb"></i> Gestion luminosité</div>
                 <div class="data-block" style="text-align: center">
-                    <input id="light-value" type="range" min="0" max="100" value="{{ brightness_inside }}"/>
+                    <input id="light-value" type="range" min="0" max="100" value="{{ brightness_inside|floatformat:"0" }}"/>
                 </div>
             </div>
 
@@ -51,7 +51,7 @@
     <script>
         window.onload = function () {
             let chartTemperature = new CanvasJS.Chart("chartTemperature", {
-                theme: "light2", // "light1", "dark1", "dark2"
+                theme: "light2",
                 animationEnabled: true,
                 title: {
                     text: "Température par heure",
@@ -79,12 +79,11 @@
                     toolTipContent: "Heure: {x}<br/>Température: {y} °C",
                     showInLegend: true,
                     legendText: "extérieur"
-                }
-                ]
+                }]
             });
 
             let chartLight = new CanvasJS.Chart("chartLight", {
-                theme: "light2", // "light1", "dark1", "dark2"
+                theme: "light2",
                 animationEnabled: true,
                 title: {
                     text: "Luminosité par heure",
@@ -94,13 +93,24 @@
                     title: "Heure"
                 },
                 axisY: {
-                    title: "Température"
+                    title: "Luminosité"
                 },
                 data: [{
                     type: "line",
                     color: "#ffd803",
                     dataPoints: {{ chart_data_2|safe }},
-                    toolTipContent: "Heure: {x}<br/>Température: {y} °C"
+                    xValueType: "dateTime",
+                    toolTipContent: "Heure: {x}<br/>Luminosité: {y} lm",
+                    showInLegend: true,
+                    legendText: "intérieur"
+                }, {
+                    type: "spline",
+                    color: "#737373",
+                    dataPoints: {{ chart_data_2_threshold|safe }},
+                    xValueType: "dateTime",
+                    toolTipContent: "Heure: {x}<br/>Luminosité: {y} lm",
+                    showInLegend: true,
+                    legendText: "extérieur"
                 }]
             });
 

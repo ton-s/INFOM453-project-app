@@ -5,9 +5,7 @@ from rooms.models import Room
 
 
 def index(request):
-
     weather = get_weather_data()
-    print(weather)
 
     rooms = Room.objects.all()
 
