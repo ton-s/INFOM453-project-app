@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 import random
 
-from rooms.models import Room
+from rooms.models import Room, Lighting
 
 
 def room(request, slug):
 
     room = get_object_or_404(Room, slug=slug)
+
 
     datapoints = []
     datapoints2 = []
