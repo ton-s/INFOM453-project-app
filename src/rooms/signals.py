@@ -2,7 +2,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from accounts.models import CustomUser
-from rooms.models import Room, Heating, Lighting
+from rooms.models import Room, Heating, Lighting, HomeAppliance
 
 
 @receiver(post_save, sender=CustomUser)
@@ -19,4 +19,6 @@ def create_rooms(sender, instance, created, **kwargs):
         for r in [bedroom, salon, kitchen, bathroom]:
             Heating.objects.create(name="phidget_temperature", room=r)
             Lighting.objects.create(name="phidget_light", room=r)
+
+        HomeAppliance.objects.create(name="machine-a-laver", room=bathroom)
 

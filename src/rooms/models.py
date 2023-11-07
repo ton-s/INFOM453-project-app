@@ -71,7 +71,7 @@ class HeatingData(models.Model):
     temperature_inside = models.FloatField()
     temperature_desired = models.FloatField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    heating = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='heating_data')
+    heating = models.ForeignKey(Heating, on_delete=models.CASCADE, related_name='heating_data')
 
     def __str__(self):
         return f"Temperature inside: {self.temperature_inside}°C ({self.timestamp})"
@@ -90,7 +90,7 @@ class HomeApplianceData(models.Model):
     mode = models.CharField(max_length=128)
     power = models.FloatField()
     timestamp = models.DateTimeField(auto_now_add=True)
-    HomeAppliance = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='homeAppliances_data')
+    homeAppliance = models.ForeignKey(HomeAppliance, on_delete=models.CASCADE, related_name='homeAppliances_data')
 
     def __str__(self):
         return f"{self.mode}-{self.power} ({self.timestamp})"
