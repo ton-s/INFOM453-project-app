@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseBadRequest, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
 
-from core.utils import prepare_data
+
+from rooms.utils import prepare_data
 from rooms.models import Room
 
 
@@ -30,3 +32,30 @@ def room(request, slug):
     }
 
     return render(request, 'rooms/room.html', context=context)
+
+
+def increase_temperature(request, slug):
+    if request.method == "POST":
+        room = get_object_or_404(Room, slug=slug)
+        last_data = room.d_heating.heating_data.last()
+        new_temp_desired = int(last_data.increase())
+
+
+        return HttpResponse(f"{new_temp_desired}°C")
+
+    else:
+        # Indicates that the request is not allowed
+        return HttpResponseBadRequest("Méthode non autorisée")
+
+
+def decrease_temperature(request, slug):
+    if request.method == "POST":
+        room = get_object_or_404(Room, slug=slug)
+        last_data = room.d_heating.heating_data.last()
+        new_temp_desired = int(last_data.decrease())
+
+        return HttpResponse(f"{new_temp_desired}°C")
+
+    else:
+        # Indicates that the request is not allowed
+        return HttpResponseBadRequest("Méthode non autorisée")

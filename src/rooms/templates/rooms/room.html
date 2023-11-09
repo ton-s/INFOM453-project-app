@@ -15,10 +15,21 @@
             <div class="block">
                 <div class="title-block"><i class="fa-solid fa-temperature-three-quarters"></i> Gestion température
                 </div>
-                <div class="data-block" style="text-align: center">
-                    <a href="" class="btn-heating"><i class="fa-solid fa-plus"></i></a>
-                    <span id="temp-value">20°C</span>
-                    <a href="" class="btn-heating"><i class="fa-solid fa-minus"></i></a>
+                <div class="data-temp-des" style="text-align: center">
+                    <form method="POST" hx-target="#temp-value" hx-swap="innerHTML"
+                          hx-post="{% url "increase_temperature" room.slug %}">
+                        {% csrf_token %}
+                        <button class="btn-heating"><i class="fa-solid fa-plus"></i></button>
+                    </form>
+                    <span id="temp-value">
+                        {{ room.d_heating.heating_data.last.temperature_desired|floatformat:"0" }}°C
+                    </span>
+                    <form method="POST" hx-target="#temp-value" hx-swap="innerHTML"
+                          hx-post="{% url "decrease_temperature" room.slug %}">
+                        {% csrf_token %}
+                        <button class="btn-heating"><i class="fa-solid fa-minus"></i></button>
+                    </form>
+
                 </div>
             </div>
 
@@ -33,14 +44,15 @@
                 <div class="title-block"><i class="fa-regular fa-clipboard"></i> Luminosité</div>
                 <div class="data-block">
                     <p class="ext">lum ext : <span>{{ brightness_outside|floatformat:"0" }}%</span></p>
-                    <p class="int">lum int : <span>{{ brightness_inside|floatformat:"0"}}%</span></p>
+                    <p class="int">lum int : <span>{{ brightness_inside|floatformat:"0" }}%</span></p>
                 </div>
             </div>
 
             <div class="block">
                 <div class="title-block"><i class="fa-solid fa-lightbulb"></i> Gestion luminosité</div>
                 <div class="data-block" style="text-align: center">
-                    <input id="light-value" type="range" min="0" max="100" value="{{ brightness_inside|floatformat:"0" }}"/>
+                    <input id="light-value" type="range" min="0" max="100"
+                           value="{{ brightness_inside|floatformat:"0" }}"/>
                 </div>
             </div>
 

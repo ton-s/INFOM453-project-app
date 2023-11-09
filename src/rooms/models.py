@@ -73,6 +73,20 @@ class HeatingData(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     heating = models.ForeignKey(Heating, on_delete=models.CASCADE, related_name='heating_data')
 
+    def increase(self):
+        if self.temperature_desired < 30:
+            self.temperature_desired += 1
+            self.save()
+
+        return self.temperature_desired
+
+    def decrease(self):
+        if self.temperature_desired > 0:
+            self.temperature_desired -= 1
+            self.save()
+
+        return self.temperature_desired
+
     def __str__(self):
         return f"Temperature inside: {self.temperature_inside}°C ({self.timestamp})"
 
