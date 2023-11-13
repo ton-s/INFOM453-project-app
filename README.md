@@ -23,29 +23,29 @@ Si vous souhaitez utiliser le projet, suivez ces instructions.
 - Rendez-vous sur le terminal et clonez le dépôt GitHub :
 
 ```shell
-$ git clone https://github.com/ton-s/INFOM453-project-app.git
+git clone https://github.com/ton-s/INFOM453-project-app.git
 ```
 
 - Ensuite, aller dans le répertoire du projet et créer un environnement virtuel :
 
 ```shell
-$ cd src
-$ python -m venv env
-$ ./env/Scripts/activate (Windows)
-$ source ./env/bin/activate (Linux)
+cd src
+python -m venv env
+./env/Scripts/activate (Windows)
+source ./env/bin/activate (Linux)
 ```
 
 - Installer les dépendances Python à partir de la racine du dépôt :
 
 ```shell
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 - Maintenant, nous allons appliquer les migrations à la base de données :
 
 ```shell
-$ python manage.py makemigrations
-$ python manage.py migrate
+python manage.py makemigrations
+python manage.py migrate
 ```
 
 ### Configuraton
@@ -53,7 +53,7 @@ $ python manage.py migrate
 - Créer un super utilisateur afin d'avoir accès au panneau administration de Django :
 
 ```shell
-$ python manage.py createsuperuser
+python manage.py createsuperuser
 ```
 
 Après avoir executé cette commande, suiver les instructions affichées dans le terminal.
@@ -65,7 +65,7 @@ Après avoir executé cette commande, suiver les instructions affichées dans le
 - Utiliser la commande suivant pour lancer le serveur en mode développement :
 
 ```shell
-$ python manage.py runserver
+python manage.py runserver
 ```
 
 Accèder au site sur le serveur local à l'adresse suivante :  http://localhost:8000
