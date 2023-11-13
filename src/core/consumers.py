@@ -43,12 +43,19 @@ class CoreConsumer(WebsocketConsumer):
                 current_temperature_inside = data[slug]["temperature"]
 
                 if "homeappliance" in data[slug]:
-                    for homeappliance in room.d_homeAppliance.all():
-                        homeappliance.save_data(mode=data[slug]["homeappliance"][homeappliance.name][0],
-                                                power=data[slug]["homeappliance"][homeappliance.name][1])
+                    if any(data[slug]["homeappliance"]):
+                        for homeappliance in room.d_homeAppliance.all():
+                            machine = data[slug]["homeappliance"][homeappliance.name]
+                            homeappliance.save_data(mode=machine[0],
+                                                    power=machine[1],
+                                                    time_work=machine[2])
 
                 # Save data
                 room.d_lighting.save_data(brightness_outside=current_brightness_outside,
                                           brightness_inside="100")
                 room.d_heating.save_data(temperature_outside=current_temperature_outside,
                                          temperature_inside=current_temperature_inside)
+
+    def send_message(self, message):
+
+        self.send(text_data=json.dumps(message))
