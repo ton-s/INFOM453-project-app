@@ -40,6 +40,98 @@ a {
     color: var(--color-txt);
 }
 
+/**** NOTIF ****/
+
+#notification {
+    position: relative;
+    background-color: var(--color-btn);
+    color: var(--color-txt);
+    min-height: 10vh;
+    width: 500px;
+    padding: 20px 35px 20px 25px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+#notification .notification-content {
+    display: flex;
+    align-items: center;
+}
+
+.notification-content .bell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    min-width: 40px;
+    background-color: var(--color-headline);
+    color: #fff;
+    font-size: 20px;
+    border-radius: 50%;
+}
+
+.notification-content .message {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.message .text {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-txt);
+}
+
+.message .text.text-1 {
+    font-weight: 600;
+}
+
+.message .text.text-2 {
+    opacity: 0.8;
+}
+
+#notification .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+#notification .close:hover {
+    opacity: 1;
+}
+
+.notif-btn {
+    width: 150px;
+    text-align: center;
+    border: 0px;
+    border-radius: 12px;
+    background: var(--color-white);
+    margin-top: 12px;
+    padding: 5px 0 5px;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: 0.8s;
+}
+
+.notif-btn:hover {
+    opacity: 0.8;
+}
+
+.notif-btn i {
+    color: var(--color-headline);
+}
+
+@media screen and (max-width: 1100px) {
+    #notification {
+        width: 100% !important;
+    }
+}
+
 
 /**** BASE ****/
 
@@ -155,7 +247,7 @@ nav a span {
     align-items: center;
 }
 
-.type{
+.type {
     font-size: 2rem;
     color: white;
 }

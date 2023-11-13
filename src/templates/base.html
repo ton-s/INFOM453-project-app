@@ -57,6 +57,7 @@
 
     <div id="content">
         <div id="burger-menu-open"><i class="fa-solid fa-bars fa-lg"></i></div>
+
         <p class="title">{% if not request.resolver_match.kwargs %}
             {% if request.resolver_match.url_name == 'index' %}
                 Tableau de bord
@@ -66,15 +67,35 @@
         {% else %}
             {{ room.name|capfirst }}
         {% endif %}
-
-
         </p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div id="notification">
+                    <div class="notification-content">
+                        <i class="fa-solid fa-bell fa-shake fa-lg bell"></i>
+
+                        <div class="message">
+                            <span class="text text-1">{{ message.extra_tags }}</span>
+                            <span class="text text-2">{{ message }}</span>
+                            <button class="notif-btn"><i class="fa-solid fa-check fa-lg"></i></button>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-xmark fa-lg close"></i>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
         {% block content %}{% endblock %}
+
     </div>
 </div>
 
 <script src="{% static 'js/script.js' %}"></script>
-<script src="https://unpkg.com/htmx.org@1.9.8" integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/htmx.org@1.9.8"
+        integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr"
+        crossorigin="anonymous"></script>
 <script src="https://cdn.canvasjs.com/ga/canvasjs.min.js"></script>
 
 <script>
