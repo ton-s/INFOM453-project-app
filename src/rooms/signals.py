@@ -2,7 +2,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from accounts.models import CustomUser
-from rooms.models import Room, Heating, Lighting, HomeAppliance, HeatingData
+from rooms.models import Room, Heating, Lighting, HomeAppliance, HeatingData, LightingData
 
 
 # SETUP DB
@@ -29,4 +29,12 @@ def update_temperature_desired(sender, instance, **kwargs):
     """Update temperature_desired after adding a new line to HeatingData"""
     if instance.temperature_desired is None:
         instance.temperature_desired = instance.temperature_inside
+        instance.save()
+
+
+@receiver(post_save, sender=LightingData)
+def update_brightness_desired(sender, instance, **kwargs):
+    """Update brightness_desired after adding a new line to LightingData"""
+    if instance.brightness_desired is None:
+        instance.brightness_desired = instance.brightness_inside
         instance.save()

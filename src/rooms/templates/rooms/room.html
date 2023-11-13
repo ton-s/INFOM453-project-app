@@ -44,15 +44,20 @@
                 <div class="title-block"><i class="fa-regular fa-clipboard"></i> Luminosité</div>
                 <div class="data-block">
                     <p class="ext">lum ext : <span>{{ brightness_outside|floatformat:"0" }}%</span></p>
-                    <p class="int">lum int : <span>{{ brightness_inside|floatformat:"0" }}%</span></p>
+                    <p class="int">lum int : <span id="light-value">{{ brightness_inside|floatformat:"0" }}%</span></p>
                 </div>
             </div>
 
             <div class="block">
                 <div class="title-block"><i class="fa-solid fa-lightbulb"></i> Gestion luminosité</div>
                 <div class="data-block" style="text-align: center">
-                    <input id="light-value" type="range" min="0" max="100"
-                           value="{{ brightness_inside|floatformat:"0" }}"/>
+                    <form method="POST" hx-trigger="input delay:500ms"
+                          hx-post="{% url "change_brightness" room.slug %}"
+                          hx-target="#light-value" hx-swap="innerHTML">
+                        {% csrf_token %}
+                        <input id="light-value" type="range" name="light-range" min="0" max="100"
+                               value="{{ brightness_inside|floatformat:"0" }}"/>
+                    </form>
                 </div>
             </div>
 
