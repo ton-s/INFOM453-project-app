@@ -52,6 +52,25 @@ class LightingData(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     lighting = models.ForeignKey(Lighting, on_delete=models.CASCADE, related_name='lighting_data')
 
+    def change_brightness(self, value):
+        self.brightness_desired = value
+        self.brightness_inside = value
+        self.save()
+
+        return self.brightness_desired
+
+    @staticmethod
+    def convert_lumen_to_percent(value):
+        max_lumen = 250
+        result = int((value / max_lumen) * 100)
+        return result
+
+    @staticmethod
+    def convert_percent_to_lum(value):
+        max_lumen = 250
+        result = (value / 100) * max_lumen
+        return result
+
     def __str__(self):
         return f"Brightness inside: {self.brightness_inside}lm ({self.timestamp})"
 
@@ -103,6 +122,7 @@ class HomeAppliance(Device):
 class HomeApplianceData(models.Model):
     mode = models.CharField(max_length=128)
     power = models.FloatField()
+    time_work = models.FloatField()
     timestamp = models.DateTimeField(auto_now_add=True)
     homeAppliance = models.ForeignKey(HomeAppliance, on_delete=models.CASCADE, related_name='homeAppliances_data')
 
