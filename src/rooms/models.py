@@ -32,7 +32,7 @@ class Device(models.Model):
         abstract = True
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.id} - {self.name}"
 
 
 class Lighting(Device):
@@ -72,7 +72,7 @@ class LightingData(models.Model):
         return result
 
     def __str__(self):
-        return f"Brightness inside: {self.brightness_inside}lm ({self.timestamp})"
+        return f"Brightness inside: {self.brightness_inside}lm ({self.timestamp}) ({self.id})"
 
 
 class Heating(Device):
@@ -107,7 +107,7 @@ class HeatingData(models.Model):
         return self.temperature_desired
 
     def __str__(self):
-        return f"Temperature inside: {self.temperature_inside}°C ({self.timestamp})"
+        return f"Temperature inside: {self.temperature_inside}°C ({self.timestamp}) ({self.id})"
 
 
 class HomeAppliance(Device):
@@ -127,7 +127,7 @@ class HomeApplianceData(models.Model):
     homeAppliance = models.ForeignKey(HomeAppliance, on_delete=models.CASCADE, related_name='homeAppliances_data')
 
     def __str__(self):
-        return f"{self.mode}-{self.power} ({self.timestamp})"
+        return f"{self.mode}-{self.power}-{self.time_work} ({self.timestamp}) ({self.id})"
 
 
 class Notification(models.Model):
