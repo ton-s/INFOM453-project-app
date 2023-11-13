@@ -20,7 +20,7 @@ def room(request, slug):
                                                         "brightness_inside",
                                                         "brightness_outside")
 
-    messages.info(request, "Votre chauffage veut augmenter la température de 5°C", extra_tags="Chauffage")
+    # messages.info(request, "Votre chauffage veut augmenter la température de 5°C", extra_tags="Chauffage")
 
     context = {
         "room": room,
