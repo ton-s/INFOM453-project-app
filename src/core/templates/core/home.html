@@ -45,7 +45,7 @@
                     </span>
                 </div>
                 <div id="widget-data">
-                    <span>{{ room.d_heating.heating_data.last.temperature_inside|floatformat:"0" }}°C</span>
+                    <span>{{ room.d_heating.heating_data.last.temperature_inside|floatformat:"0"|default:"/" }}°C</span>
                     <span><i class="fa-solid fa-bell fa-lg"></i></span>
                 </div>
             </a>
