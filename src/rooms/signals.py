@@ -29,15 +29,14 @@ def update_temperature_desired(sender, instance, created, **kwargs):
     """Update temperature_desired after adding a new line to HeatingData"""
 
     if created and instance.temperature_desired is None:
-        heating_data = sender.objects.filter(heating_id=instance.heating_id)
-        if heating_data.exists():
-            last_temperature = heating_data.exclude(id=instance.id).last()
-            if instance.temperature_inside == getattr(last_temperature, 'temperature_desired', None):
-                instance.temperature_desired = instance.temperature_inside
-            else:
+        last_temperature = sender.objects.filter(heating_id=instance.heating_id).exclude(id=instance.id).last()
+        if last_temperature:
+            if instance.temperature_inside != last_temperature.temperature_desired:
                 instance.temperature_desired = last_temperature.temperature_desired
+        else:
+            instance.temperature_desired = instance.temperature_inside
 
-            instance.save()
+        instance.save()
 
 
 @receiver(post_save, sender=LightingData)
