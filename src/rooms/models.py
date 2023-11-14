@@ -113,9 +113,10 @@ class HeatingData(models.Model):
 class HomeAppliance(Device):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='d_homeAppliance')
 
-    def save_data(self, mode, power):
+    def save_data(self, mode, power, time_work):
         HomeApplianceData.objects.create(mode=mode,
                                          power=power,
+                                         time_work=time_work,
                                          homeAppliance=self)
 
 
