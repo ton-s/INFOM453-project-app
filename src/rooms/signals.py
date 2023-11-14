@@ -40,17 +40,18 @@ def update_temperature_desired(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=LightingData)
-def update_brightness_desired(sender, instance, **kwargs):
+def update_brightness_desired(sender, instance, created, **kwargs):
     """Update brightness_desired after adding a new line to LightingData"""
-    if instance.brightness_desired is None:
+    if created and instance.brightness_desired is None:
         instance.brightness_desired = instance.brightness_inside
         instance.save()
 
+
 # @receiver(post_save, sender=LightingData)
-# def send_message_brightness(sender, instance, **kwargs):
+# def send_message_brightness(sender, instance, created, **kwargs):
 #     """Send message to device when brightness changes"""
-#     x = sender.objects.filter(lighting_id=instance.lighting_id).last()
+#     last_lighting = sender.objects.filter(lighting_id=instance.lighting_id).exclude(id=instance.id).last()
 #
-#     if x.brightness_desired != instance.brightness_desired:
-#
-#         print(x)
+#     if not created and last_lighting:
+#         if last_lighting.brightness_inside == instance.brightness_inside:
+#             print(last_lighting, instance)
