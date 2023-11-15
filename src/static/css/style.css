@@ -318,7 +318,7 @@ nav a span {
 
 .widget {
     background-color: var(--color-white);
-    height: 25vh;
+    min-height: 18vh;
     width: 550px;
     margin-right: auto;
     margin-bottom: 30px;
@@ -344,7 +344,8 @@ nav a span {
 }
 
 #widget-data span:nth-child(2) {
-
+    display: flex;
+    align-items: center;
 }
 
 .widget:hover {
@@ -366,7 +367,7 @@ nav a span {
 .block {
     background-color: var(--color-white);
     color: var(--color-txt);
-    height: 20vh;
+    max-height: 20vh;
     width: 260px;
     padding: 20px;
     border-radius: 8px;
@@ -436,10 +437,11 @@ nav a span {
     font-size: 1.2rem;
     margin: 0 15px 0;
     font-weight: 900;
+    transition: 0.8s;
 }
 
 .chart {
-    height: 30vh;
+    height: 35vh;
     width: 600px;
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
 }
