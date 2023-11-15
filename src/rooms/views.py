@@ -94,9 +94,27 @@ def change_brightness(request, slug):
         return HttpResponseBadRequest("Méthode non autorisée")
 
 
-def close_notification(request, slug):
-    pass
+def notification_valid(request, slug, type):
+    if request.method == "POST":
+        room = get_object_or_404(Room, slug=slug)
+
+        if type == "chauffage":
+            notif = room.d_heating.heating_notifications.first()
+            #TODO - changer les valeurs du chauffage
+
+        else:
+            notif = room.d_lighting.lighting_notifications.first()
+            # TODO - changer les valeurs de l'éclairage
+        # Delete notification
+        notif.delete()
+
+        return HttpResponse(status=200)
+
+    else:
+        # Indicates that the request is not allowed
+        return HttpResponseBadRequest("Méthode non autorisée")
 
 
-def valid_notification(request, slug):
+def notification_close(request, slug, type):
+    #TODO
     pass

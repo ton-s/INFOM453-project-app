@@ -80,10 +80,13 @@
                                 <div class="message">
                                     <span class="text text-1">{{ message.extra_tags }}</span>
                                     <span class="text text-2">{{ message }}</span>
-                                    <button class="notif-btn"><i class="fa-solid fa-check fa-lg"></i></button>
+                                    <a hx-post="{% url "notification_valid" room.slug message.extra_tags|slugify %}"
+                                       hx-target="closest #notification" hx-swap="outerHTML"
+                                       hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }' class="notif-btn"><i
+                                            class="fa-solid fa-check fa-lg"></i></a>
                                 </div>
                             </div>
-                            <i class="fa-solid fa-xmark fa-lg close"></i>
+                            <a href=""><i class="fa-solid fa-xmark fa-lg close"></i></a>
                         </div>
                     {% endif %}
                 {% endfor %}
