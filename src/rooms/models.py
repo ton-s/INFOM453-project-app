@@ -138,7 +138,7 @@ class Notification(models.Model):
     lighting = models.ForeignKey(Lighting, on_delete=models.CASCADE, related_name='lighting_notifications',
                                  blank=True,
                                  null=True)
-    heating = models.ForeignKey(Lighting, on_delete=models.CASCADE, related_name='heating_notifications',
+    heating = models.ForeignKey(Heating, on_delete=models.CASCADE, related_name='heating_notifications',
                                 blank=True,
                                 null=True)
 
