@@ -2,16 +2,29 @@ from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
-
 from rooms.utils import prepare_data
-from rooms.models import Room, LightingData
+from rooms.models import Room, LightingData, Notification
 
 
 def room(request, slug):
     room = get_object_or_404(Room, slug=slug)
-    heating_data = room.d_heating.heating_data
-    lighting_data = room.d_lighting.lighting_data
+    device_heating = room.d_heating
+    device_lighting = room.d_lighting
+    heating_data = device_heating.heating_data
+    lighting_data = device_lighting.lighting_data
+
     if heating_data.exists() and lighting_data.exists():
+
+        # Check notification
+        notif_heating = device_heating.heating_notifications.last()
+        if notif_heating:
+            messages.info(request, f"{notif_heating.content} ({notif_heating.timestamp.strftime('%H:%M')})",
+                          extra_tags="Chauffage")
+
+        notif_ligthing = device_lighting.lighting_notifications.last()
+        if notif_ligthing:
+            messages.info(request, f"{notif_ligthing.content} ({notif_ligthing.timestamp.strftime('%H:%M')})",
+                          extra_tags="Éclairage")
 
         # Prepare data (today) for chart
         chart_data_1, chart_data_1_threshold = prepare_data(heating_data,
@@ -20,8 +33,6 @@ def room(request, slug):
         chart_data_2, chart_data_2_threshold = prepare_data(lighting_data,
                                                             "brightness_inside",
                                                             "brightness_outside")
-
-        # messages.info(request, "Votre chauffage veut augmenter la température de 5°C", extra_tags="Chauffage")
 
         context = {
             "room": room,
@@ -40,7 +51,6 @@ def room(request, slug):
     else:
         # Indicates that the request is not allowed
         return HttpResponseBadRequest("Pas de données disponibles")
-
 
 
 def increase_temperature(request, slug):
@@ -82,3 +92,11 @@ def change_brightness(request, slug):
     else:
         # Indicates that the request is not allowed
         return HttpResponseBadRequest("Méthode non autorisée")
+
+
+def close_notification(request, slug):
+    pass
+
+
+def valid_notification(request, slug):
+    pass

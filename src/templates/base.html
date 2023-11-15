@@ -69,22 +69,26 @@
         {% endif %}
         </p>
 
-        {% if messages %}
-            {% for message in messages %}
-                <div id="notification">
-                    <div class="notification-content">
-                        <i class="fa-solid fa-bell fa-shake fa-lg bell"></i>
+        <div id="all-notification">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if "info" in message.tags %}
+                        <div id="notification">
+                            <div class="notification-content">
+                                <i class="fa-solid fa-bell fa-shake fa-lg bell"></i>
 
-                        <div class="message">
-                            <span class="text text-1">{{ message.extra_tags }}</span>
-                            <span class="text text-2">{{ message }}</span>
-                            <button class="notif-btn"><i class="fa-solid fa-check fa-lg"></i></button>
+                                <div class="message">
+                                    <span class="text text-1">{{ message.extra_tags }}</span>
+                                    <span class="text text-2">{{ message }}</span>
+                                    <button class="notif-btn"><i class="fa-solid fa-check fa-lg"></i></button>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-xmark fa-lg close"></i>
                         </div>
-                    </div>
-                    <i class="fa-solid fa-xmark fa-lg close"></i>
-                </div>
-            {% endfor %}
-        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
 
 
         {% block content %}{% endblock %}
