@@ -2,6 +2,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from accounts.models import CustomUser
+from core.consumers import CoreConsumer
 from rooms.models import Room, Heating, Lighting, HomeAppliance, HeatingData, LightingData
 
 
@@ -47,11 +48,18 @@ def update_brightness_desired(sender, instance, created, **kwargs):
         instance.save()
 
 
-# @receiver(post_save, sender=LightingData)
-# def send_message_brightness(sender, instance, created, **kwargs):
-#     """Send message to device when brightness changes"""
-#     last_lighting = sender.objects.filter(lighting_id=instance.lighting_id).exclude(id=instance.id).last()
-#
-#     if not created and last_lighting:
-#         if last_lighting.brightness_inside == instance.brightness_inside:
-#             print(last_lighting, instance)
+@receiver(post_save, sender=LightingData)
+def send_message_brightness(sender, instance, created, **kwargs):
+    """Send message to device when brightness changes"""
+    last_lighting = sender.objects.filter(lighting_id=instance.lighting_id).exclude(id=instance.id).last()
+
+    if not created and last_lighting:
+
+        if float(last_lighting.brightness_inside) != float(instance.brightness_inside):
+            message = dict()
+            message[instance.lighting.room.slug] = {"light": instance.brightness_inside}
+
+            print(message)
+
+            consumer = CoreConsumer()
+            consumer.send_message(message)
