@@ -100,15 +100,20 @@ def notification_valid(request, slug, type):
 
         if type == "chauffage":
             notif = room.d_heating.heating_notifications.first()
-            #TODO - changer les valeurs du chauffage
+            data = room.d_heating.heating_data.last()
+            data.set_temperature_desired(notif.action)
 
         else:
             notif = room.d_lighting.lighting_notifications.first()
-            # TODO - changer les valeurs de l'éclairage
-        # Delete notification
-        notif.delete()
+            data = room.d_lighting.lighting_data.last()
+            data.set_brightness_desired(notif.action)
 
-        return HttpResponse(status=200)
+
+        if notif:
+            notif.delete()
+            return HttpResponse(status=200)
+        else:
+            return HttpResponseBadRequest("Notification non trouvée")
 
     else:
         # Indicates that the request is not allowed
@@ -116,5 +121,23 @@ def notification_valid(request, slug, type):
 
 
 def notification_close(request, slug, type):
-    #TODO
-    pass
+    if request.method == "POST":
+        room = get_object_or_404(Room, slug=slug)
+
+        if type == "chauffage":
+            notif = room.d_heating.heating_notifications.first()
+        else:
+            notif = room.d_lighting.lighting_notifications.first()
+
+        if notif:
+            notif.delete()
+            return HttpResponse(status=200)
+        else:
+            return HttpResponseBadRequest("Notification non trouvée")
+
+    else:
+        # Indicates that the request is not allowed
+        return HttpResponseBadRequest("Méthode non autorisée")
+
+
+

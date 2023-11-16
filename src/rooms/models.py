@@ -59,6 +59,13 @@ class LightingData(models.Model):
 
         return self.brightness_desired
 
+    def set_brightness_desired(self, value):
+
+        new_brightness = self.brightness_desired + value
+        self.brightness_desired = new_brightness if 0 <= new_brightness <= 250 else 0 if new_brightness < 0 else 250
+        self.brightness_inside = self.brightness_desired
+        self.save()
+
     @staticmethod
     def convert_lumen_to_percent(value):
         max_lumen = 250
@@ -105,6 +112,12 @@ class HeatingData(models.Model):
             self.save()
 
         return self.temperature_desired
+
+    def set_temperature_desired(self, value):
+
+        new_temperature = self.temperature_desired + value
+        self.temperature_desired = new_temperature if 0 <= new_temperature <= 30 else 0 if new_temperature < 0 else 30
+        self.save()
 
     def __str__(self):
         return f"Temperature inside: {self.temperature_inside}°C ({self.timestamp}) ({self.id})"

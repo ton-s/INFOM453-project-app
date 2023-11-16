@@ -86,7 +86,11 @@
                                             class="fa-solid fa-check fa-lg"></i></a>
                                 </div>
                             </div>
-                            <a href=""><i class="fa-solid fa-xmark fa-lg close"></i></a>
+                            <a hx-post="{% url "notification_close" room.slug message.extra_tags|slugify %}"
+                               hx-target="closest #notification" hx-swap="outerHTML"
+                               hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'>
+                                <i class="fa-solid fa-xmark fa-lg close"></i>
+                            </a>
                         </div>
                     {% endif %}
                 {% endfor %}

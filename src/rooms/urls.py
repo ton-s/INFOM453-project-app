@@ -1,6 +1,7 @@
 from django.urls import path
 
-from rooms.views import room, decrease_temperature, increase_temperature, change_brightness, notification_valid
+from rooms.views import room, decrease_temperature, increase_temperature, change_brightness, notification_valid, \
+    notification_close
 
 urlpatterns = [
     path("", room, name='room'),
@@ -8,4 +9,5 @@ urlpatterns = [
     path("increase-temperature/", increase_temperature, name="increase_temperature"),
     path("change-brightness/", change_brightness, name="change_brightness"),
     path("notification-valid/<str:type>", notification_valid, name="notification_valid"),
+    path("notification-close/<str:type>", notification_close, name="notification_close"),
 ]
