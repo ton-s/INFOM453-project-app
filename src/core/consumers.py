@@ -54,6 +54,9 @@ class CoreConsumer(WebsocketConsumer):
                 current_brightness_outside = data[slug]["light"]
                 current_temperature_inside = data[slug]["temperature"]
 
+                last_light_data = room.d_lighting.lighting_data.last()
+                current_brightness_inside = last_light_data.brightness_inside if last_light_data else 0
+
                 if "homeappliance" in data[slug]:
                     if any(data[slug]["homeappliance"]):
                         for homeappliance in room.d_homeAppliance.all():
@@ -64,7 +67,7 @@ class CoreConsumer(WebsocketConsumer):
 
                 # Save data
                 room.d_lighting.save_data(brightness_outside=current_brightness_outside,
-                                          brightness_inside="100")
+                                          brightness_inside=current_brightness_inside)
                 room.d_heating.save_data(temperature_outside=current_temperature_outside,
                                          temperature_inside=current_temperature_inside)
 
