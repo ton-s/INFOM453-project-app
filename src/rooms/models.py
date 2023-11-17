@@ -46,9 +46,9 @@ class Lighting(Device):
 
 
 class LightingData(models.Model):
-    brightness_outside = models.FloatField()
-    brightness_inside = models.FloatField()
-    brightness_desired = models.FloatField(blank=True, null=True)
+    brightness_outside = models.FloatField()  # lux
+    brightness_inside = models.FloatField()  # lumen
+    brightness_desired = models.FloatField(blank=True, null=True)  # lumen
     timestamp = models.DateTimeField(auto_now_add=True)
     lighting = models.ForeignKey(Lighting, on_delete=models.CASCADE, related_name='lighting_data')
 
@@ -60,11 +60,24 @@ class LightingData(models.Model):
         return self.brightness_desired
 
     def set_brightness_desired(self, value):
-
         new_brightness = self.brightness_desired + value
         self.brightness_desired = new_brightness if 0 <= new_brightness <= 250 else 0 if new_brightness < 0 else 250
         self.brightness_inside = self.brightness_desired
         self.save()
+
+    def get_type_brightness(self):
+        # brightness in lux
+        type_brightness = ""
+        if self.brightness_outside <= 20:
+            type_brightness = "Nuit"
+        elif 20 < self.brightness_outside <= 500:
+            type_brightness = "Sombre"
+        elif 500 < self.brightness_outside <= 3000:
+            type_brightness = "Nuageux"
+        else:
+            type_brightness = "Soleil"
+
+        return type_brightness
 
     @staticmethod
     def convert_lumen_to_percent(value):

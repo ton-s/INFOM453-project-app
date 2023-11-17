@@ -7,6 +7,8 @@ from rooms.models import Room, LightingData, Notification
 
 
 def room(request, slug):
+    """Revoir le calcule de la luminosté extérieur (lux) et intérieur (lumen) et revoir graphique !!!"""
+
     room = get_object_or_404(Room, slug=slug)
     device_heating = room.d_heating
     device_lighting = room.d_lighting
@@ -38,7 +40,7 @@ def room(request, slug):
             "room": room,
             "temperature_outside": heating_data.last().temperature_outside,
             "temperature_inside": heating_data.last().temperature_inside,
-            "brightness_outside": lighting_data.last().brightness_outside,
+            "brightness_outside": lighting_data.last().get_type_brightness(),
             "brightness_inside": LightingData.convert_lumen_to_percent(lighting_data.last().brightness_inside),
             "chart_data_1": chart_data_1,
             "chart_data_1_threshold": chart_data_1_threshold,
