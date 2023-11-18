@@ -49,6 +49,7 @@ class LightingData(models.Model):
     brightness_outside = models.FloatField()  # lux
     brightness_inside = models.FloatField()  # lumen
     brightness_desired = models.FloatField(blank=True, null=True)  # lumen
+    open_curtains = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
     lighting = models.ForeignKey(Lighting, on_delete=models.CASCADE, related_name='lighting_data')
 
@@ -89,6 +90,12 @@ class LightingData(models.Model):
     def convert_percent_to_lum(value):
         max_lumen = 250
         result = (value / 100) * max_lumen
+        return result
+
+    @staticmethod
+    def convert_lux_to_percent(value):
+        max_lux = 120000  # full sun
+        result = int((value / max_lux) * 100)
         return result
 
     def __str__(self):

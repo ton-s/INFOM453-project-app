@@ -110,14 +110,14 @@
                     title: "Heure"
                 },
                 axisY: {
-                    title: "Luminosité"
+                    title: "Luminosité (%)"
                 },
                 data: [{
                     type: "line",
                     color: "#ffd803",
                     dataPoints: {{ chart_data_2|safe }},
                     xValueType: "dateTime",
-                    toolTipContent: "Heure: {x}<br/>Luminosité: {y} lm",
+                    toolTipContent: "Heure: {x}<br/>Luminosité: {y} %",
                     showInLegend: true,
                     legendText: "intérieur"
                 }, {
@@ -125,7 +125,7 @@
                     color: "#737373",
                     dataPoints: {{ chart_data_2_threshold|safe }},
                     xValueType: "dateTime",
-                    toolTipContent: "Heure: {x}<br/>Luminosité: {y} lm",
+                    toolTipContent: "Heure: {x}<br/>Luminosité: {y} %",
                     showInLegend: true,
                     legendText: "extérieur"
                 }]
