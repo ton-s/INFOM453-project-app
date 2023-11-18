@@ -7,8 +7,8 @@
             <div class="block">
                 <div class="title-block"><i class="fa-regular fa-clipboard"></i> Température</div>
                 <div class="data-block">
-                    <p class="ext">t° ext :<span>{{ temperature_outside|floatformat:"0" }}°C</span></p>
-                    <p class="int">t° int :<span>{{ temperature_inside|floatformat:"0" }}°C</span></p>
+                    <p class="ext">Extérieur :<span>{{ temperature_outside|floatformat:"0" }}°C</span></p>
+                    <p class="int">Intérieur :<span>{{ temperature_inside|floatformat:"0" }}°C</span></p>
                 </div>
             </div>
 
@@ -43,8 +43,8 @@
             <div class="block">
                 <div class="title-block"><i class="fa-regular fa-clipboard"></i> Luminosité</div>
                 <div class="data-block">
-                    <p class="ext">lum ext : <span>{{ brightness_outside }}</span></p>
-                    <p class="int">lum int : <span id="light-value">{{ brightness_inside|floatformat:"0" }}%</span></p>
+                    <p class="ext">Extérieur : <span>{{ brightness_outside }}</span></p>
+                    <p class="int">Intérieur : <span id="light-value">{{ brightness_inside|floatformat:"0" }}%</span></p>
                 </div>
             </div>
 

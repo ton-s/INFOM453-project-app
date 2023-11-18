@@ -94,7 +94,7 @@ class LightingData(models.Model):
 
     @staticmethod
     def convert_lux_to_percent(value):
-        max_lux = 120000  # full sun
+        max_lux = 10000  # full sun
         result = int((value / max_lux) * 100)
         return result
 

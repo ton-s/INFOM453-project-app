@@ -381,7 +381,7 @@ nav a span {
 }
 
 #heating, #lighting {
-    margin-top: 45px;
+    margin-top: 35px;
 }
 
 #heating > div, #lighting > div {
@@ -441,7 +441,7 @@ nav a span {
 }
 
 .chart {
-    height: 35vh;
+    height: 32vh;
     width: 600px;
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
 }
