@@ -61,5 +61,6 @@ def send_message_brightness(sender, instance, created, **kwargs):
 
             print(message)
 
+            # send data to devices
             consumer = CoreConsumer()
             consumer.send_message(message)
