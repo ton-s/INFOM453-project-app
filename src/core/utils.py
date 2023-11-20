@@ -12,7 +12,7 @@ def get_weather_data(city="Namur"):
     Returns:
         weather_data (dict): Current weather data in JSON format.
     """
-    key = "25cd8ec6f4c2c912b8b5bec00cc2795c"  # Pas bonne pratique
+    key = "1829795ae6104bacae16af824bb87c5e"  # Pas bonne pratique
 
     url = f"http://api.weatherstack.com/current?access_key={key}&query={city}"
 
