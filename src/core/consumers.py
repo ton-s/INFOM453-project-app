@@ -29,7 +29,7 @@ class CoreConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
 
-        print("Data received: " + text_data_json)
+        print(f"Data received: {text_data_json}")
 
         self.save_data_in_database(text_data_json)
 
