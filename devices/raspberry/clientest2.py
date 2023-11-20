@@ -1,7 +1,7 @@
 import time
 import json
 from websockets.sync.client import connect
-from test2 import *
+from devices.raspberry.update_data import *
 
 # Configuration de l'URL WebSocket
 websocket_url = "ws://localhost:8765/"
