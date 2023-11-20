@@ -59,7 +59,7 @@ def send_message_brightness(sender, instance, created, **kwargs):
             message = dict()
             message[instance.lighting.room.slug] = {"light": instance.brightness_inside}
 
-            print(message)
+            print("Data sent: " + message)
 
             # send data to devices
             consumer = CoreConsumer()
