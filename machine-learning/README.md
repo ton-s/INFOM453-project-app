@@ -11,4 +11,14 @@ heating/ - Répertoire renfermant les fichiers essentiels à l'entraînement du 
     dataset - jeux de données
 light/ - Répertoire renfermant les fichiers essentiels à l'entraînement du modèle de prédiction de lumière
 ...
+```
+
+## Pré-requis pour l'apprentissage
+
+```
+pip install -U scikit-learn
+pip install matplotlib
+pip install pandas
+```
+
 
