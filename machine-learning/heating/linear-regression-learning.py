@@ -3,11 +3,13 @@ from sklearn.metrics import mean_squared_error, r2_score
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 import pickle
-
+import os
 import matplotlib.pyplot as plt
 
+path = os.path.dirname(os.path.abspath(__file__))
+
 # Load the dataset
-file_path = "dataset.csv"
+file_path = path + "/dataset.csv"
 data = pd.read_csv(file_path, delimiter=';')
 
 # Select features and target
@@ -47,6 +49,8 @@ result = round(model.predict([[0, 0, 0, 2, 4]])[0])
 print(f"Prédiction : {result}")
 
 # Save the model
-pickle.dump(model, open('model.pkl', 'wb'))
+model_path = path + "/model.pkl"
+pickle.dump(model, open(model_path, 'wb'))
+
 
 
