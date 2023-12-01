@@ -1,19 +1,19 @@
 {
     "salon": {
-        "temperature": "19.31",
-        "light": "838.9"
+        "temperature": "16.44",
+        "light": "64.874"
     },
     "cuisine": {
-        "temperature": "19.31",
-        "light": "838.9"
+        "temperature": "16.44",
+        "light": "64.874"
     },
     "salle-de-bain": {
-        "temperature": "19.07",
-        "light": "838.9",
+        "temperature": "16.56",
+        "light": "64.874",
         "homeappliance": {}
     },
     "chambre": {
-        "temperature": "18.41",
-        "light": "838.9"
+        "temperature": "16.3",
+        "light": "64.874"
     }
 }
