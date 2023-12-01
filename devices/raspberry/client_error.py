@@ -5,8 +5,8 @@ import websockets
 from update_data import *
 
 # Configuration de l'URL WebSocket
-#websocket_url = "ws://localhost:8765/"
-websocket_url = "ws://192.168.1.14/ws/"
+websocket_url = "ws://localhost:8765/"
+#websocket_url = "ws://192.168.1.14/ws/"
 
 # On demande le mode d'exécution
 mode = input("Execution mode (test/real): ")
@@ -57,7 +57,24 @@ async def main():
                         # Chargez les nouvelles données
                         new_data = json.load(json_file)
 
-                    await websocket.send(json.dumps(new_data))
+                    # On récupère les changements de chaque capteur
+                    temp1_changed = get_changed(temperature_observable)
+                    temp2_changed = get_changed(temperature_observable2)
+                    temp3_changed = get_changed(temperature_observable3)
+                    light_changed = get_changed(light_observable)
+                    # On envoie les données du slider seulement quand il est pas vide
+                    slider_changed = new_data["salle-de-bain"]["homeappliance"] != {}
+
+                    # On vérifie si des données ont été modifiées avant de renvoyer le json
+                    if (temp1_changed or 
+                    temp2_changed or 
+                    temp3_changed or 
+                    light_changed or 
+                    slider_changed):
+                        await websocket.send(json.dumps(new_data))
+                        print("!!! Data envoyées !!!")
+                    else:
+                        print("Pas besoin d'envoyer les anciennes valeurs")
 
                     # Recevoir des données du serveur WebSocket
                     try:
@@ -66,7 +83,7 @@ async def main():
                     except TimeoutError:
                         print("Timeout Error : Pas de messages reçus par le serveur")
 
-                    #time.sleep(3)
+                    time.sleep(2)
 
                     # Laps de temps qui détermine à quelle fréquence les données sont envoyées
                     #await asyncio.sleep(3)  # Utilisez asyncio.sleep pour éviter le blocage

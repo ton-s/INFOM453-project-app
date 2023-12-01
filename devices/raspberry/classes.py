@@ -5,6 +5,7 @@ class TemperatureObservable:
         self.temperature = None
         self.last_notified_temperature = None
         self.seuil_changement_temperature = 0.5
+        self.has_changed = False
 
     def add_observer(self, observer):
         self.observers.append(observer)
@@ -31,6 +32,7 @@ class TemperatureObservable:
             self.temperature = new_temperature
             self.last_notified_temperature = new_temperature
             self.notify_observers()
+            self.has_changed = True
         return self.temperature
 
 class LightObservable:
@@ -39,6 +41,7 @@ class LightObservable:
         self.illuminance = None
         self.last_notified_illuminance = None
         self.seuil_changement_luminance = 50
+        self.has_changed = False
 
     def add_observer(self, observer):
         self.observers.append(observer)
@@ -56,6 +59,7 @@ class LightObservable:
             self.illuminance = new_illuminance
             self.last_notified_illuminance = new_illuminance
             self.notify_observers()
+            self.has_changed = True
         return self.illuminance
 
 class SliderObservable:
@@ -64,6 +68,7 @@ class SliderObservable:
         self.voltage_ratio = None
         self.last_notified_voltage_ratio = None
         self.seuil_changement_slider = 0.1
+        self.has_changed = False
 
     def add_observer(self, observer):
         self.observers.append(observer)
@@ -81,6 +86,7 @@ class SliderObservable:
             self.voltage_ratio = new_voltage_ratio
             self.last_notified_voltage_ratio = new_voltage_ratio
             self.notify_observers()
+            self.has_changed = True
         return self.voltage_ratio
 
 # Define Observer classes

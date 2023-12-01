@@ -38,6 +38,12 @@ temperature_observable3 = TemperatureObservable()
 light_observable = LightObservable()
 slider_observable = SliderObservable()
 
+ls_observable = [temperature_observable,
+                 temperature_observable2,
+                 temperature_observable3,
+                 light_observable,
+                 slider_observable]
+
 # Create Observer instances
 temperature_observer = TemperatureObserver()
 temperature_observer2 = TemperatureObserver()
@@ -57,6 +63,15 @@ machine_lock = False
 
 # Variable pour la durée restante du cycle de lavage
 remaining_wash_time = 0
+
+# Méthode pour savoir si les données ont changées
+def get_changed(observable):
+    # On check si la variable has_changed a été mise à True
+    if observable.has_changed:
+        observable.has_changed = False
+        return True
+    else:
+        return False
 
 def update_data_observer(user_input):
     global machine_lock
