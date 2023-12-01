@@ -3,6 +3,7 @@ from django.dispatch import receiver
 
 from accounts.models import CustomUser
 from core.consumers import CoreConsumer
+from core.utils import run_model_heating
 from rooms.models import Room, Heating, Lighting, HomeAppliance, HeatingData, LightingData
 
 
@@ -10,6 +11,7 @@ from rooms.models import Room, Heating, Lighting, HomeAppliance, HeatingData, Li
 @receiver(post_save, sender=CustomUser)
 def create_rooms(sender, instance, created, **kwargs):
     """Creation of Room instances when creating a superuser"""
+
     if created and instance.is_superuser:
         # Rooms
         bedroom = Room.objects.create(name="chambre", user=instance)
@@ -43,6 +45,7 @@ def update_temperature_desired(sender, instance, created, **kwargs):
 @receiver(post_save, sender=LightingData)
 def update_brightness_desired(sender, instance, created, **kwargs):
     """Update brightness_desired after adding a new line to LightingData"""
+
     if created and instance.brightness_desired is None:
         instance.brightness_desired = instance.brightness_inside
         instance.save()
@@ -51,6 +54,7 @@ def update_brightness_desired(sender, instance, created, **kwargs):
 @receiver(post_save, sender=LightingData)
 def send_message_brightness(sender, instance, created, **kwargs):
     """Send message to device when brightness changes"""
+
     last_lighting = sender.objects.filter(lighting_id=instance.lighting_id).exclude(id=instance.id).last()
 
     if not created and last_lighting:
@@ -65,3 +69,23 @@ def send_message_brightness(sender, instance, created, **kwargs):
             # send data to devices
             consumer = CoreConsumer()
             consumer.send_message(message)
+
+
+# ALGORITHME
+@receiver(post_save, sender=HeatingData)
+def heating_detection_algorithm(sender, instance, created, **kwargs):
+    """Algorithm for detecting the ideal temperature in a room"""
+
+    if not created:
+        last_heating = sender.objects.filter(heating_id=instance.heating_id).exclude(id=instance.id).last()
+        print(last_heating)
+        if last_heating:
+            prediction = run_model_heating([[0, 0, 0, 2, 1]])
+
+            print(prediction)
+
+
+@receiver(post_save, sender=HeatingData)
+def lighting_detection_algorithm(sender, instance, created, **kwargs):
+    """Algorithm for detecting the ideal brightness in a room"""
+    pass
