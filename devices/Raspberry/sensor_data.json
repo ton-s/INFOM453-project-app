@@ -1,0 +1,19 @@
+{
+    "salon": {
+        "temperature": "16.44",
+        "light": "64.874"
+    },
+    "cuisine": {
+        "temperature": "16.44",
+        "light": "64.874"
+    },
+    "salle-de-bain": {
+        "temperature": "16.56",
+        "light": "64.874",
+        "homeappliance": {}
+    },
+    "chambre": {
+        "temperature": "16.3",
+        "light": "64.874"
+    }
+}
