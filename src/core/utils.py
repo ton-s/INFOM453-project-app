@@ -1,6 +1,10 @@
 import requests
 from datetime import date
 
+import pickle
+from sklearn.preprocessing import PolynomialFeatures
+from thermo.settings import BASE_DIR
+
 
 def get_weather_data(city="Namur"):
     """Retrieves current weather data for a given city
@@ -32,24 +36,50 @@ def get_season_now():
     -------
     season (str): A string representing the current season ("spring", "summer", "autumn", or "winter")
 
-    Raises
-    ------
-    IndexError: If the calculated value doesn't match any known season.
     """
     now = date.today()
-    month = now.month * 100
-    day = now.day
-    month_day = month + day  # combining month and day
+    month_day = (now.month, now.day)
 
-    if (month_day >= 301) and (month_day <= 531):
+    if (3, 21) <= month_day < (6, 21):
         season = "printemps"
-    elif (month_day > 531) and (month_day < 901):
+    elif (6, 21) <= month_day < (9, 21):
         season = "été"
-    elif (month_day >= 901) and (month_day <= 1130):
+    elif (9, 21) <= month_day < (12, 21):
         season = "automne"
-    elif (month_day > 1130) and (month_day <= 229):
-        season = "hiver"
     else:
-        raise IndexError("Invalid")
+        season = "hiver"
 
     return season
+
+
+def load_model(name_model):
+    """Loads a template into the directory named 'ml_models'
+
+    Parameters
+    ----------
+    name_model (str): the model file
+
+    Returns
+    -------
+    model (sklearn)
+    """
+    path = BASE_DIR / f'ml_models/{name_model}'
+    with open(path, 'rb') as file:
+        model = pickle.load(file)
+
+    return model
+
+
+def run_model_heating(data):
+    """Load and make a prediction with the Heating model
+
+    """
+    # load model
+    model = load_model("model_heating.pkl")
+
+    # make a prediction
+    poly = PolynomialFeatures(degree=2)
+    sample_data_poly = poly.fit_transform(data)
+    prediction = round(model.predict(sample_data_poly)[0])
+
+    return prediction
