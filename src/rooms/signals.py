@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from accounts.models import CustomUser
 from core.consumers import CoreConsumer
 from core.utils import run_model_heating
-from rooms.models import Room, Heating, Lighting, HomeAppliance, HeatingData, LightingData
+from rooms.models import Room, Heating, Lighting, HomeAppliance, HeatingData, LightingData, Notification
 
 
 # SETUP DB
@@ -80,9 +80,20 @@ def heating_detection_algorithm(sender, instance, created, **kwargs):
         last_heating = sender.objects.filter(heating_id=instance.heating_id).exclude(id=instance.id).last()
         print(last_heating)
         if last_heating:
-            prediction = run_model_heating([[0, 0, 0, 2, 1]])
-
+            prediction = run_model_heating(instance)
             print(prediction)
+
+            # create notification
+            content = "Salut, c'est moi ! (mdr)"
+            temperature_ideal = float(instance.temperature_inside) - prediction
+            context = {"content": content, "action": temperature_ideal, "heating": instance.heating}
+
+            last_instance, create = Notification.objects.get_or_create(heating=instance.heating, defaults=context)
+
+            if not create:
+                last_instance.__dict__.update(**context)
+                last_instance.save()
+
 
 
 @receiver(post_save, sender=HeatingData)
