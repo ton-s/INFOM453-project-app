@@ -7,6 +7,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <title>EcoTherm</title>
 
     <!-- CSS -->
@@ -58,15 +59,16 @@
     <div id="content">
         <div id="burger-menu-open"><i class="fa-solid fa-bars fa-lg"></i></div>
 
-        <p class="title">{% if not request.resolver_match.kwargs %}
-            {% if request.resolver_match.url_name == 'index' %}
-                Tableau de bord
+        <p class="title">
+            {% if not request.resolver_match.kwargs %}
+                {% if request.resolver_match.url_name == 'index' %}
+                    Tableau de bord
+                {% else %}
+                    Consommation
+                {% endif %}
             {% else %}
-                Consommation
+                {{ room.name|capfirst }}
             {% endif %}
-        {% else %}
-            {{ room.name|capfirst }}
-        {% endif %}
         </p>
 
         <div id="all-notification">

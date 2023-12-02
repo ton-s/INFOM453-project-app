@@ -21,12 +21,12 @@ def room(request, slug):
         notif_heating = device_heating.heating_notifications.last()
         if notif_heating:
             messages.info(request, f"{notif_heating.content} ({notif_heating.timestamp.strftime('%H:%M')})",
-                          extra_tags="Chauffage")
+                          extra_tags="heating")
 
         notif_ligthing = device_lighting.lighting_notifications.last()
         if notif_ligthing:
             messages.info(request, f"{notif_ligthing.content} ({notif_ligthing.timestamp.strftime('%H:%M')})",
-                          extra_tags="Éclairage")
+                          extra_tags="lighting")
 
         # Prepare data (today) for chart
         chart_data_1, chart_data_1_threshold = prepare_data(heating_data,
@@ -100,7 +100,7 @@ def notification_valid(request, slug, type):
     if request.method == "POST":
         room = get_object_or_404(Room, slug=slug)
 
-        if type == "chauffage":
+        if type == "heating":
             notif = room.d_heating.heating_notifications.first()
             data = room.d_heating.heating_data.last()
             data.set_temperature_desired(notif.action)
@@ -126,7 +126,7 @@ def notification_close(request, slug, type):
     if request.method == "POST":
         room = get_object_or_404(Room, slug=slug)
 
-        if type == "chauffage":
+        if type == "heating":
             notif = room.d_heating.heating_notifications.first()
         else:
             notif = room.d_lighting.lighting_notifications.first()
