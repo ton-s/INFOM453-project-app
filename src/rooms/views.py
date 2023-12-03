@@ -21,12 +21,12 @@ def room(request, slug):
         notif_heating = device_heating.heating_notifications.last()
         if notif_heating:
             messages.info(request, f"{notif_heating.content} ({notif_heating.timestamp.strftime('%H:%M')})",
-                          extra_tags="heating")
+                          extra_tags=str(notif_heating.id))
 
         notif_ligthing = device_lighting.lighting_notifications.last()
         if notif_ligthing:
             messages.info(request, f"{notif_ligthing.content} ({notif_ligthing.timestamp.strftime('%H:%M')})",
-                          extra_tags="lighting")
+                          extra_tags=str(notif_ligthing.id))
 
         # Prepare data (today) for chart
         chart_data_1, chart_data_1_threshold = prepare_data(heating_data,
@@ -96,50 +96,32 @@ def change_brightness(request, slug):
         return HttpResponseBadRequest("Méthode non autorisée")
 
 
-def notification_valid(request, slug, type):
+def notification_valid(request, slug, notification_id):
     if request.method == "POST":
-        room = get_object_or_404(Room, slug=slug)
+        notification = get_object_or_404(Notification, id=notification_id)
 
-        if type == "heating":
-            notif = room.d_heating.heating_notifications.first()
-            data = room.d_heating.heating_data.last()
-            data.set_temperature_desired(notif.action)
+        if notification.heating:
+            last_data = notification.heating.heating_data.last()
+            last_data.set_temperature_desired(notification.action)
 
         else:
-            notif = room.d_lighting.lighting_notifications.first()
-            data = room.d_lighting.lighting_data.last()
-            data.set_brightness_desired(notif.action)
+            last_data = notification.lighting.lighting_data.last()
+            last_data.set_brightness_desired(notification.action)
 
-
-        if notif:
-            notif.delete()
-            return HttpResponse(status=200)
-        else:
-            return HttpResponseBadRequest("Notification non trouvée")
+        notification.delete()
+        return HttpResponse(status=200)
 
     else:
         # Indicates that the request is not allowed
         return HttpResponseBadRequest("Méthode non autorisée")
 
 
-def notification_close(request, slug, type):
+def notification_close(request, slug, notification_id):
     if request.method == "POST":
-        room = get_object_or_404(Room, slug=slug)
+        notification = get_object_or_404(Notification, id=notification_id)
 
-        if type == "heating":
-            notif = room.d_heating.heating_notifications.first()
-        else:
-            notif = room.d_lighting.lighting_notifications.first()
-
-        if notif:
-            notif.delete()
-            return HttpResponse(status=200)
-        else:
-            return HttpResponseBadRequest("Notification non trouvée")
-
+        notification.delete()
+        return HttpResponse(status=200)
     else:
         # Indicates that the request is not allowed
         return HttpResponseBadRequest("Méthode non autorisée")
-
-
-

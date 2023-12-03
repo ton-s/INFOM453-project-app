@@ -84,9 +84,9 @@ def heating_detection_algorithm(sender, instance, created, **kwargs):
             print(prediction)
 
             # create notification
-            content = "Salut, c'est moi ! (mdr)"
-            temperature_ideal = float(instance.temperature_inside) - prediction
-            context = {"content": content, "action": temperature_ideal, "heating": instance.heating}
+            content = f"Salut, c'est moi !\nJe souhaite changer la température de ton chauffage à {prediction}°C"
+            action = (prediction - float(instance.temperature_desired))
+            context = {"content": content, "action": action, "heating": instance.heating}
 
             last_instance, create = Notification.objects.get_or_create(heating=instance.heating, defaults=context)
 
@@ -94,8 +94,7 @@ def heating_detection_algorithm(sender, instance, created, **kwargs):
                 last_instance.__dict__.update(**context)
                 last_instance.save()
 
-
-
+            #TODO - mettre une régle pour limiter l'envoie de notif
 @receiver(post_save, sender=HeatingData)
 def lighting_detection_algorithm(sender, instance, created, **kwargs):
     """Algorithm for detecting the ideal brightness in a room"""

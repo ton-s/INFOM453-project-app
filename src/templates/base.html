@@ -80,15 +80,15 @@
                                 <i class="fa-solid fa-bell fa-shake fa-lg bell"></i>
 
                                 <div class="message">
-                                    <span class="text text-1">{{ message.extra_tags }}</span>
+                                    <span class="text text-1">Auto-Assist</span>
                                     <span class="text text-2">{{ message }}</span>
-                                    <a hx-post="{% url "notification_valid" room.slug message.extra_tags|slugify %}"
+                                    <a hx-post="{% url "notification_valid" room.slug message.extra_tags %}"
                                        hx-target="closest #notification" hx-swap="outerHTML"
                                        hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }' class="notif-btn"><i
                                             class="fa-solid fa-check fa-lg"></i></a>
                                 </div>
                             </div>
-                            <a hx-post="{% url "notification_close" room.slug message.extra_tags|slugify %}"
+                            <a hx-post="{% url "notification_close" room.slug message.extra_tags %}"
                                hx-target="closest #notification" hx-swap="outerHTML"
                                hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'>
                                 <i class="fa-solid fa-xmark fa-lg close"></i>
