@@ -3,7 +3,7 @@ from django.dispatch import receiver
 
 from accounts.models import CustomUser
 from core.consumers import CoreConsumer
-from core.utils import run_model_heating
+from core.utils import run_model_heating, run_model_lighting
 from rooms.models import Room, Heating, Lighting, HomeAppliance, HeatingData, LightingData, Notification
 
 
@@ -80,10 +80,11 @@ def heating_detection_algorithm(sender, instance, created, **kwargs):
         last_heating = sender.objects.filter(heating_id=instance.heating_id).exclude(id=instance.id).last()
         print(last_heating)
         if last_heating:
+
             prediction = run_model_heating(instance)
             print(prediction)
 
-            # create notification
+            # create a heating notification
             content = f"Salut, c'est moi !\nJe souhaite changer la température de ton chauffage à {prediction}°C"
             action = (prediction - float(instance.temperature_desired))
             context = {"content": content, "action": action, "heating": instance.heating}
@@ -95,7 +96,15 @@ def heating_detection_algorithm(sender, instance, created, **kwargs):
                 last_instance.save()
 
             #TODO - mettre une régle pour limiter l'envoie de notif
-@receiver(post_save, sender=HeatingData)
+@receiver(post_save, sender=LightingData)
 def lighting_detection_algorithm(sender, instance, created, **kwargs):
     """Algorithm for detecting the ideal brightness in a room"""
-    pass
+
+    if not created:
+        last_lighting = sender.objects.filter(lighting_id=instance.lighting_id).exclude(id=instance.id).last()
+        print(last_lighting)
+        if last_lighting:
+            prediction = run_model_lighting(instance)
+            print(f"Lighting: {prediction}")
+
+            # create a lighting notification

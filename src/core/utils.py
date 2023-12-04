@@ -129,10 +129,38 @@ def run_model_heating(instance):
     # load model
     model = load_model("model_heating.pkl")
 
-    # make a prediction
+    # prepare model and data
     poly = PolynomialFeatures(degree=2)
     print(prepare_data_heating(instance))
-    sample_data_poly = poly.fit_transform([prepare_data_heating(instance)])
+    prepared_data = prepare_data_heating(instance)
+    sample_data_poly = poly.fit_transform([prepared_data])
+
+    # make a prediction
     prediction = round(model.predict(sample_data_poly)[0])
 
     return prediction
+
+
+def run_model_lighting(instance):
+    """Load and make a prediction with the Lighting model
+
+    Parameters
+    ----------
+    instance (LightingData): an instance of lighting device data
+
+    Return
+    ------
+    prediction of ideal brightness by machine learning model (int)
+    """
+    # load model
+    model = load_model("model_lighting.pkl")
+
+    # prepare data
+    prepared_data = [get_state_sun(get_weather_data()), instance.brightness_outside]
+
+    # make a prediction
+    prediction = model.predict([prepared_data])[0]
+
+    return prediction
+
+
