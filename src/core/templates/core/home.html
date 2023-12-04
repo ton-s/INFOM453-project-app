@@ -11,8 +11,8 @@
             </div>
         </div>
 
-        <div id="season" class="info" style="background: brown !important;">
-            <div class="type"><i style="" class="fa-solid fa-leaf fa-sm"></i></div>
+        <div id="season" class="info">
+            <div class="type"></div>
             <div class="data">
                 <div>{{ season|capfirst }}</div>
             </div>
@@ -58,4 +58,5 @@
         {% endfor %}
     </div>
 
+    {{ season|json_script:'data_season' }}
 {% endblock %}
