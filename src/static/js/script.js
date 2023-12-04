@@ -34,32 +34,36 @@ if (dayNightBtn) {
 
 const season = document.getElementById("data_season");
 const seasonWidget = document.getElementById("season");
-const seasonIcon = seasonWidget.querySelector(".type");
 
-const seasonText = season.textContent.replace(/"/g, "");
 
-const seasonData = {
-    printemps: {
-        color: "#2ecc71",
-        icon: '<i class="fa-solid fa-seedling fa-sm"></i>'
-    },
-    été: {
-        color: "#1abc9c",
-        icon: '<i class="fa-solid fa-umbrella-beach fa-sm"></i>'
-    },
-    automne: {
-        color: "brown",
-        icon: '<i class="fa-solid fa-leaf fa-sm"></i>'
-    },
-    default: {
-        color: "#2c3e50",
-        icon: '<i class="fa-solid fa-snowflake fa-sm"></i>'
+if (season && seasonWidget) {
+    const seasonIcon = seasonWidget.querySelector(".type");
+    const seasonText = season.textContent.replace(/"/g, "");
+
+    const seasonData = {
+        printemps: {
+            color: "#2ecc71",
+            icon: '<i class="fa-solid fa-seedling fa-sm"></i>'
+        },
+        été: {
+            color: "#1abc9c",
+            icon: '<i class="fa-solid fa-umbrella-beach fa-sm"></i>'
+        },
+        automne: {
+            color: "brown",
+            icon: '<i class="fa-solid fa-leaf fa-sm"></i>'
+        },
+        default: {
+            color: "#2c3e50",
+            icon: '<i class="fa-solid fa-snowflake fa-sm"></i>'
+        }
     }
+
+    const chosenSeason = seasonData[seasonText] || seasonData.default
+    seasonWidget.style.backgroundColor = chosenSeason.color
+    seasonIcon.innerHTML = chosenSeason.icon
 }
 
-const chosenSeason = seasonData[seasonText] || seasonData.default
-seasonWidget.style.backgroundColor = chosenSeason.color
-seasonIcon.innerHTML = chosenSeason.icon
 
 
 
