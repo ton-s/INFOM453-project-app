@@ -53,6 +53,9 @@ class LightingData(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     lighting = models.ForeignKey(Lighting, on_delete=models.CASCADE, related_name='lighting_data')
 
+    MAX_BRIGHTNESS_INSIDE = 250  # lumen
+    MAX_BRIGHTNESS_OUTSIDE = 10000  # lux
+
     def change_brightness(self, value):
         self.brightness_desired = value
         self.brightness_inside = value
@@ -62,7 +65,7 @@ class LightingData(models.Model):
 
     def set_brightness_desired(self, value):
         new_brightness = self.brightness_desired + value
-        self.brightness_desired = new_brightness if 0 <= new_brightness <= 250 else 0 if new_brightness < 0 else 250
+        self.brightness_desired = new_brightness if 0 <= new_brightness <= self.MAX_BRIGHTNESS_INSIDE else 0 if new_brightness < 0 else 250
         self.brightness_inside = self.brightness_desired
         self.save()
 
@@ -82,19 +85,19 @@ class LightingData(models.Model):
 
     @staticmethod
     def convert_lumen_to_percent(value):
-        max_lumen = 250
+        max_lumen = LightingData.MAX_BRIGHTNESS_INSIDE
         result = int((value / max_lumen) * 100)
         return result
 
     @staticmethod
     def convert_percent_to_lum(value):
-        max_lumen = 250
+        max_lumen = LightingData.MAX_BRIGHTNESS_INSIDE
         result = (value / 100) * max_lumen
         return result
 
     @staticmethod
     def convert_lux_to_percent(value):
-        max_lux = 10000  # full sun
+        max_lux = LightingData.MAX_BRIGHTNESS_OUTSIDE  # full sun
         result = int((value / max_lux) * 100)
         return result
 
