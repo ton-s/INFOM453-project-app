@@ -7,10 +7,11 @@ Ce répertoire comprend tous les programmes nécessaires pour entraîner les mod
 
 ```
 heating/ - Répertoire renfermant les fichiers essentiels à l'entraînement du modèle de prédiction de température
-    poly-regression-learning - script d'apprentissage par regréssion polynomiale (variante de la régression linéaire)
-    dataset - jeux de données
+    poly-regression-learning - script d'apprentissage à l'aide de la regréssion polynomiale (variante de la régression linéaire)
+    dataset - jeux de données à propos du le chauffage
 light/ - Répertoire renfermant les fichiers essentiels à l'entraînement du modèle de prédiction de lumière
-...
+    tree-regression-learning.py - script d'apprentissage à l'aide d'arbre de régression
+    dataset - jeux de données à propos de l'éclairage
 ```
 
 ## Pré-requis pour l'apprentissage
