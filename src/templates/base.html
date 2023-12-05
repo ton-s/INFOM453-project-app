@@ -75,25 +75,27 @@
             {% if messages %}
                 {% for message in messages %}
                     {% if "info" in message.tags %}
-                        <div id="notification">
-                            <div class="notification-content">
-                                <i class="fa-solid fa-bell fa-shake fa-lg bell"></i>
+                        {% with  message.extra_tags|split:"-" as list_tags %}
+                            <div id="notification">
+                                <div class="notification-content">
+                                    <i class="fa-solid fa-bell fa-shake fa-lg bell"></i>
 
-                                <div class="message">
-                                    <span class="text text-1">Auto-Assist</span>
-                                    <span class="text text-2">{{ message }}</span>
-                                    <a hx-post="{% url "notification_valid" room.slug message.extra_tags %}"
-                                       hx-target="closest #notification" hx-swap="outerHTML"
-                                       hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }' class="notif-btn"><i
-                                            class="fa-solid fa-check fa-lg"></i></a>
+                                    <div class="message">
+                                        <span class="text text-1">{{ list_tags.1 }}</span>
+                                        <span class="text text-2">{{ message }}</span>
+                                        <a hx-post="{% url "notification_valid" room.slug list_tags|first %}"
+                                           hx-target="closest #notification" hx-swap="outerHTML"
+                                           hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }' class="notif-btn"><i
+                                                class="fa-solid fa-check fa-lg"></i></a>
+                                    </div>
                                 </div>
+                                <a hx-post="{% url "notification_close" room.slug list_tags|first %}"
+                                   hx-target="closest #notification" hx-swap="outerHTML"
+                                   hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'>
+                                    <i class="fa-solid fa-xmark fa-lg close"></i>
+                                </a>
                             </div>
-                            <a hx-post="{% url "notification_close" room.slug message.extra_tags %}"
-                               hx-target="closest #notification" hx-swap="outerHTML"
-                               hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'>
-                                <i class="fa-solid fa-xmark fa-lg close"></i>
-                            </a>
-                        </div>
+                        {% endwith %}
                     {% endif %}
                 {% endfor %}
             {% endif %}

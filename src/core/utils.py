@@ -1,9 +1,11 @@
-import requests
 from datetime import date, datetime
+import random
+import requests
 import ephem
-
 import pickle
+import json
 from sklearn.preprocessing import PolynomialFeatures
+
 from thermo.settings import BASE_DIR
 
 
@@ -164,3 +166,32 @@ def run_model_lighting(instance):
     return prediction
 
 
+# notification
+def load_json(file):
+    path = BASE_DIR / 'static/json/' / file
+    with open(path, 'r', encoding='utf-8') as json_file:
+        data = json.load(json_file)
+
+    return data
+
+
+def get_temperature_notification(temperature, too):
+    """Generate a temperature notification
+
+    Parameters
+    ----------
+    temperature (int) : ideal temperature
+    too (str) notification type
+
+    Return
+    ------
+    notification (str) : random temperature notification depending on type
+    """
+    # load json
+    data = load_json("notifications.json")
+
+    # generate random notification
+    random_notification = random.choice(data[too]["justifications"])
+    notification = random_notification.replace("{{temperature}}", str(temperature))
+
+    return notification

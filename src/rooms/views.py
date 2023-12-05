@@ -1,9 +1,15 @@
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.template.defaulttags import register
 
 from rooms.utils import prepare_data
 from rooms.models import Room, LightingData, Notification
+
+
+@register.filter(name='split')
+def split(value, key):
+    return value.split(key)
 
 
 def room(request, slug):
@@ -21,12 +27,12 @@ def room(request, slug):
         notif_heating = device_heating.heating_notifications.last()
         if notif_heating:
             messages.info(request, f"{notif_heating.content} ({notif_heating.timestamp.strftime('%H:%M')})",
-                          extra_tags=str(notif_heating.id))
+                          extra_tags=f"{notif_heating.id}-Chauffage")
 
         notif_ligthing = device_lighting.lighting_notifications.last()
         if notif_ligthing:
             messages.info(request, f"{notif_ligthing.content} ({notif_ligthing.timestamp.strftime('%H:%M')})",
-                          extra_tags=str(notif_ligthing.id))
+                          extra_tags=f"{notif_ligthing.id}-Éclairage")
 
         # Prepare data (today) for chart
         chart_data_1, chart_data_1_threshold = prepare_data(heating_data,

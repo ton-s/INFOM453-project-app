@@ -1,9 +1,10 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import datetime
 
 from accounts.models import CustomUser
 from core.consumers import CoreConsumer
-from core.utils import run_model_heating, run_model_lighting
+from core.utils import run_model_heating, run_model_lighting, get_temperature_notification
 from rooms.models import Room, Heating, Lighting, HomeAppliance, HeatingData, LightingData, Notification
 
 
@@ -72,6 +73,19 @@ def send_message_brightness(sender, instance, created, **kwargs):
 
 
 # ALGORITHME
+def create_notification(content, action, instance, field_name):
+
+    context = {"content": content, "action": action, field_name: getattr(instance, field_name)}
+
+    last_instance, created = Notification.objects.get_or_create(**{field_name: getattr(instance, field_name)},
+                                                                defaults=context)
+
+    if not created:
+        last_instance.__dict__.update(**context)
+        last_instance.timestamp = datetime.now()
+        last_instance.save()
+
+
 @receiver(post_save, sender=HeatingData)
 def heating_detection_algorithm(sender, instance, created, **kwargs):
     """Algorithm for detecting the ideal temperature in a room"""
@@ -93,18 +107,14 @@ def heating_detection_algorithm(sender, instance, created, **kwargs):
 
                 if int(instance.temperature_desired) != int(prediction):
                     # create a heating notification
-                    content = f"Salut, c'est moi !\nJe souhaite changer la température de ton chauffage à {prediction}°C"
+                    if instance.temperature_outside < 16:
+                        content = get_temperature_notification(prediction, "too_cold")
+                    else:
+                        content = get_temperature_notification(prediction, "too_hot")
+
                     action = (prediction - float(instance.temperature_desired))
-                    context = {"content": content, "action": action, "heating": instance.heating}
 
-                    last_instance, create = Notification.objects.get_or_create(heating=instance.heating,
-                                                                               defaults=context)
-
-                    if not create:
-                        last_instance.__dict__.update(**context)
-                        last_instance.save()
-
-                    # TODO - faire en sorte que lorsqu'on delete un notif, celle-ci (la même) ne revienne pas immédiatement
+                    create_notification(content, action, instance, "heating")
 
 
 @receiver(post_save, sender=LightingData)
@@ -131,11 +141,5 @@ def lighting_detection_algorithm(sender, instance, created, **kwargs):
                     # create a lighting notification
                     content = f"Salut, c'est moi !\nJe souhaite changer la luminosité de la pièce à {prediction}"
                     action = prediction
-                    context = {"content": content, "action": action, "lighting": instance.lighting}
 
-                    last_instance, create = Notification.objects.get_or_create(lighting=instance.lighting,
-                                                                               defaults=context)
-
-                    if not create:
-                        last_instance.__dict__.update(**context)
-                        last_instance.save()
+                    create_notification(content, action, instance, "lighting")
