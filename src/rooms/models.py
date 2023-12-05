@@ -63,12 +63,6 @@ class LightingData(models.Model):
 
         return self.brightness_desired
 
-    def set_brightness_desired(self, value):
-        new_brightness = self.brightness_desired + value
-        self.brightness_desired = new_brightness if 0 <= new_brightness <= self.MAX_BRIGHTNESS_INSIDE else 0 if new_brightness < 0 else 250
-        self.brightness_inside = self.brightness_desired
-        self.save()
-
     def get_type_brightness(self):
         """Get an outdoor brightness type
 

@@ -106,7 +106,7 @@ def notification_valid(request, slug, notification_id):
 
         else:
             last_data = notification.lighting.lighting_data.last()
-            last_data.set_brightness_desired(notification.action)
+            last_data.change_brightness(notification.action)
 
         notification.delete()
         return HttpResponse(status=200)
