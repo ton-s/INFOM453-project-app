@@ -91,16 +91,20 @@ def heating_detection_algorithm(sender, instance, created, **kwargs):
                 # print(last_heating)
                 # print(prediction)
 
-                # create a heating notification
-                content = f"Salut, c'est moi !\nJe souhaite changer la température de ton chauffage à {prediction}°C"
-                action = (prediction - float(instance.temperature_desired))
-                context = {"content": content, "action": action, "heating": instance.heating}
+                if int(instance.temperature_desired) == int(prediction):
+                    # create a heating notification
+                    content = f"Salut, c'est moi !\nJe souhaite changer la température de ton chauffage à {prediction}°C"
+                    action = (prediction - float(instance.temperature_desired))
+                    context = {"content": content, "action": action, "heating": instance.heating}
 
-                last_instance, create = Notification.objects.get_or_create(heating=instance.heating, defaults=context)
+                    last_instance, create = Notification.objects.get_or_create(heating=instance.heating,
+                                                                               defaults=context)
 
-                if not create:
-                    last_instance.__dict__.update(**context)
-                    last_instance.save()
+                    if not create:
+                        last_instance.__dict__.update(**context)
+                        last_instance.save()
+
+                    # TODO - faire en sorte que lorsqu'on delete un notif, celle-ci (la même) ne revienne pas immédiatement
 
 
 @receiver(post_save, sender=LightingData)
@@ -121,14 +125,17 @@ def lighting_detection_algorithm(sender, instance, created, **kwargs):
                 prediction = run_model_lighting(instance)
                 print(last_lighting)
                 print(f"Lighting: {prediction}")
+                # TODO - gérer les rideaux
 
-                # create a lighting notification
-                content = f"Salut, c'est moi !\nJe souhaite changer la luminosité de la pièce à {prediction}"
-                action = prediction
-                context = {"content": content, "action": action, "lighting": instance.lighting}
+                if int(instance.brightness_inside) == int(prediction):
+                    # create a lighting notification
+                    content = f"Salut, c'est moi !\nJe souhaite changer la luminosité de la pièce à {prediction}"
+                    action = prediction
+                    context = {"content": content, "action": action, "lighting": instance.lighting}
 
-                last_instance, create = Notification.objects.get_or_create(lighting=instance.lighting, defaults=context)
+                    last_instance, create = Notification.objects.get_or_create(lighting=instance.lighting,
+                                                                               defaults=context)
 
-                if not create:
-                    last_instance.__dict__.update(**context)
-                    last_instance.save()
+                    if not create:
+                        last_instance.__dict__.update(**context)
+                        last_instance.save()
