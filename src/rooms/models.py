@@ -70,8 +70,13 @@ class LightingData(models.Model):
         self.save()
 
     def get_type_brightness(self):
-        # brightness in lux
-        type_brightness = ""
+        """Get an outdoor brightness type
+
+        Return
+        ------
+        type_brightness (string) : an outdoor brightness type
+        """
+        # brightness outside in lux
         if self.brightness_outside <= 20:
             type_brightness = "Nuit"
         elif 20 < self.brightness_outside <= 500:
@@ -85,18 +90,47 @@ class LightingData(models.Model):
 
     @staticmethod
     def convert_lumen_to_percent(value):
+        """Converts a lumen value to its percentage relative to the maximum brightness inside
+
+        Parameters
+        ----------
+        value (float) : the lumen value to be converted
+
+        Return
+        ------
+        result (int) : the percentage of the given lumen value relative to the maximum brightness inside
+        """
         max_lumen = LightingData.MAX_BRIGHTNESS_INSIDE
         result = int((value / max_lumen) * 100)
         return result
 
     @staticmethod
     def convert_percent_to_lum(value):
+        """Converts a percentage value to the corresponding lumen value relative to the maximum brightness inside
+
+        Parameters
+        ----------
+        value (float) : the percentage value to be converted
+        Return
+        ------
+        result (int) : the lumen value equivalent to the given percentage relative to the maximum brightness inside
+        """
         max_lumen = LightingData.MAX_BRIGHTNESS_INSIDE
         result = (value / 100) * max_lumen
         return result
 
     @staticmethod
     def convert_lux_to_percent(value):
+        """Converts a lux value to its percentage relative to the maximum brightness outside
+
+        Parameters
+        ----------
+        value (float): the lux value to be converted
+
+        Return
+        ------
+        result (int) : the percentage of the given lux value relative to the maximum brightness outside
+        """
         max_lux = LightingData.MAX_BRIGHTNESS_OUTSIDE  # full sun
         result = int((value / max_lux) * 100)
         return result
@@ -137,7 +171,6 @@ class HeatingData(models.Model):
         return self.temperature_desired
 
     def set_temperature_desired(self, value):
-
         new_temperature = self.temperature_desired + value
         self.temperature_desired = new_temperature if 0 <= new_temperature <= 30 else 0 if new_temperature < 0 else 30
         self.save()
