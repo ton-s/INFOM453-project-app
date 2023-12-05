@@ -4,7 +4,7 @@ from datetime import datetime
 
 from accounts.models import CustomUser
 from core.consumers import CoreConsumer
-from core.utils import run_model_heating, run_model_lighting, get_temperature_notification
+from core.utils import run_model_heating, run_model_lighting, get_notification
 from rooms.models import Room, Heating, Lighting, HomeAppliance, HeatingData, LightingData, Notification
 
 
@@ -74,7 +74,6 @@ def send_message_brightness(sender, instance, created, **kwargs):
 
 # ALGORITHME
 def create_notification(content, action, instance, field_name):
-
     context = {"content": content, "action": action, field_name: getattr(instance, field_name)}
 
     last_instance, created = Notification.objects.get_or_create(**{field_name: getattr(instance, field_name)},
@@ -108,9 +107,9 @@ def heating_detection_algorithm(sender, instance, created, **kwargs):
                 if int(instance.temperature_desired) != int(prediction):
                     # create a heating notification
                     if instance.temperature_outside < 16:
-                        content = get_temperature_notification(prediction, "too_cold")
+                        content = get_notification(prediction, "too_cold")
                     else:
-                        content = get_temperature_notification(prediction, "too_hot")
+                        content = get_notification(prediction, "too_hot")
 
                     action = (prediction - float(instance.temperature_desired))
 
@@ -139,7 +138,12 @@ def lighting_detection_algorithm(sender, instance, created, **kwargs):
 
                 if int(instance.brightness_inside) != int(prediction):
                     # create a lighting notification
-                    content = f"Salut, c'est moi !\nJe souhaite changer la luminosité de la pièce à {prediction}"
+                    prediction_percent = LightingData.convert_lumen_to_percent(prediction)
+                    if instance.get_type_brightness() in ["Nuit", "Sombre"]:
+                        content = get_notification(prediction_percent, "too_dark")
+                    else:
+                        content = get_notification(prediction_percent, "too_bright")
+
                     action = prediction
 
                     create_notification(content, action, instance, "lighting")

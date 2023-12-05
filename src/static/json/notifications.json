@@ -1,24 +1,46 @@
 {
   "too_cold": {
     "justifications": [
-      "Température extérieure basse ! Réglez la température à {{temperature}} degrés pour un confort optimal et économe.",
-      "Froid aujourd'hui ! Pensez à fixer la température à {{temperature}} degrés avec parcimonie pour économiser de l'énergie.",
-      "Alerte froid ! Pour une atmosphère chaleureuse et économe, ajustez la température à {{temperature}} degrés de manière raisonnable.",
-      "Temps glacial dehors ! Réglez la température à {{temperature}} degrés avec modération pour rester au chaud tout en préservant l'énergie.",
-      "Il fait frisquet ! Optez pour un réglage prudent de la température à {{temperature}} degrés pour un confort accru et une consommation d'énergie réduite.",
-      "Brrr... Réglez la température à {{temperature}} degrés avec précaution pour contrer le froid extérieur tout en économisant de l'énergie.",
-      "Ambiance glaciale ! Pensez à ajuster la température à {{temperature}} degrés de manière économe pour un intérieur douillet et efficient."
+      "Température extérieure basse ! Réglez la température à {{value}} degrés pour un confort optimal et économe.",
+      "Froid aujourd'hui ! Pensez à fixer la température à {{value}} degrés avec parcimonie pour économiser de l'énergie.",
+      "Alerte froid ! Pour une atmosphère chaleureuse et économe, ajustez la température à {{value}} degrés de manière raisonnable.",
+      "Temps glacial dehors ! Réglez la température à {{value}} degrés avec modération pour rester au chaud tout en préservant l'énergie.",
+      "Il fait frisquet ! Optez pour un réglage prudent de la température à {{value}} degrés pour un confort accru et une consommation d'énergie réduite.",
+      "Brrr... Réglez la température à {{value}} degrés avec précaution pour contrer le froid extérieur tout en économisant de l'énergie.",
+      "Ambiance glaciale ! Pensez à ajuster la température à {{value}} degrés de manière économe pour un intérieur douillet et efficient."
     ]
   },
   "too_hot": {
     "justifications": [
-      "Température extérieure élevée ! Réglez la température à {{temperature}} degrés de manière économe pour un confort optimal.",
-      "Chaleur aujourd'hui ! Pensez à ajuster la température à {{temperature}} degrés avec parcimonie pour économiser de l'énergie.",
-      "Alerte chaleur ! Pour une atmosphère fraîche et économe, ajustez la température à {{temperature}} degrés de manière raisonnable.",
-      "Il fait torride dehors ! Réglez la température à {{temperature}} degrés avec modération pour rester au frais tout en préservant l'énergie.",
-      "Attention à la canicule ! Optez pour un réglage prudent de la température à {{temperature}} degrés pour un confort accru et une consommation d'énergie réduite.",
-      "C'est la fournaise dehors ! Fixez la température à {{temperature}} degrés avec précaution pour contrer la chaleur extérieure tout en économisant de l'énergie.",
-      "Canicule en cours ! Pensez à ajuster la température à {{temperature}} degrés de manière économe pour un intérieur frais et efficient."
+      "Température extérieure élevée ! Réglez la température à {{value}} degrés de manière économe pour un confort optimal.",
+      "Chaleur aujourd'hui ! Pensez à ajuster la température à {{value}} degrés avec parcimonie pour économiser de l'énergie.",
+      "Alerte chaleur ! Pour une atmosphère fraîche et économe, ajustez la température à {{value}} degrés de manière raisonnable.",
+      "Il fait torride dehors ! Réglez la température à {{value}} degrés avec modération pour rester au frais tout en préservant l'énergie.",
+      "Attention à la canicule ! Optez pour un réglage prudent de la température à {{value}} degrés pour un confort accru et une consommation d'énergie réduite.",
+      "C'est la fournaise dehors ! Fixez la température à {{value}} degrés avec précaution pour contrer la chaleur extérieure tout en économisant de l'énergie.",
+      "Canicule en cours ! Pensez à ajuster la température à {{value}} degrés de manière économe pour un intérieur frais et efficient."
+    ]
+  },
+  "too_bright": {
+    "justifications": [
+      "Luminosité extérieure élevée ! Réglez la luminosité à {{value}}% pour un confort optimal tout en économisant votre énergie.",
+      "Trop de lumière aujourd'hui ! Pensez à ajuster la luminosité à {{value}}% avec parcimonie pour économiser de l'énergie.",
+      "Alerte luminosité ! Pour un éclairage doux et économe, ajustez la luminosité à {{value}}% de manière raisonnable.",
+      "Lumière éclatante ! Réglez la luminosité à {{value}}% avec modération pour un environnement confortable et économe.",
+      "Trop de clarté ! Optez pour un réglage prudent de la luminosité à {{value}}% pour un confort accru et une consommation d'énergie réduite.",
+      "Baigné de lumière ! Ajustez la luminosité à {{value}}% avec précaution pour créer une ambiance plus douce tout en économisant de l'énergie.",
+      "Luminosité excessive ! Pensez à fixer la luminosité à {{value}}% de manière économe pour un intérieur agréable et efficient."
+    ]
+  },
+  "too_dark": {
+    "justifications": [
+      "Luminosité faible ! Réglez la luminosité à {{value}}% pour un confort optimal tout en économisant votre énergie.",
+      "Pas assez de lumière aujourd'hui ! Pensez à ajuster la luminosité à {{value}}% avec parcimonie pour économiser de l'énergie.",
+      "Alerte faible luminosité ! Pour un éclairage adéquat et économe, ajustez la luminosité à {{value}}% de manière raisonnable.",
+      "Obscurité trop importante ! Réglez la luminosité à {{value}}% avec modération pour un environnement confortable et économe.",
+      "Trop sombre ! Optez pour un réglage prudent de la luminosité à {{value}}% pour un confort accru et une consommation d'énergie réduite.",
+      "Dans l'ombre ! Ajustez la luminosité à {{value}}% avec précaution pour créer une ambiance plus lumineuse tout en économisant de l'énergie.",
+      "Luminosité insuffisante ! Pensez à fixer la luminosité à {{value}}% de manière économe pour un intérieur bien éclairé et efficient."
     ]
   }
 }
