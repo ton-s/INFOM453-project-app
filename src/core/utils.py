@@ -175,23 +175,23 @@ def load_json(file):
     return data
 
 
-def get_temperature_notification(temperature, too):
-    """Generate a temperature notification
+def get_notification(value, too):
+    """Generate a random notification
 
     Parameters
     ----------
-    temperature (int) : ideal temperature
-    too (str) notification type
+    value (int) : ideal value
+    too (str) : notification type
 
     Return
     ------
-    notification (str) : random temperature notification depending on type
+    notification (str) : random notification of value justification
     """
     # load json
     data = load_json("notifications.json")
 
     # generate random notification
     random_notification = random.choice(data[too]["justifications"])
-    notification = random_notification.replace("{{temperature}}", str(temperature))
+    notification = random_notification.replace("{{value}}", str(value))
 
     return notification
