@@ -91,7 +91,7 @@ def heating_detection_algorithm(sender, instance, created, **kwargs):
                 # print(last_heating)
                 # print(prediction)
 
-                if int(instance.temperature_desired) == int(prediction):
+                if int(instance.temperature_desired) != int(prediction):
                     # create a heating notification
                     content = f"Salut, c'est moi !\nJe souhaite changer la température de ton chauffage à {prediction}°C"
                     action = (prediction - float(instance.temperature_desired))
@@ -127,7 +127,7 @@ def lighting_detection_algorithm(sender, instance, created, **kwargs):
                 print(f"Lighting: {prediction}")
                 # TODO - gérer les rideaux
 
-                if int(instance.brightness_inside) == int(prediction):
+                if int(instance.brightness_inside) != int(prediction):
                     # create a lighting notification
                     content = f"Salut, c'est moi !\nJe souhaite changer la luminosité de la pièce à {prediction}"
                     action = prediction
