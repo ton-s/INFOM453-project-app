@@ -17,17 +17,19 @@ closeBtn.onclick = function () {
 const dayNightBtn = document.getElementById("day-night");
 
 if (dayNightBtn) {
+
     dayNightBtn.onclick = function () {
-
-        const content = dayNightBtn.querySelector("i");
-
-        if (!dayNightBtn.classList.toggle("day-night-active")) {
-            content.outerHTML = "<i class=\"fa-solid fa-sun fa-xl\"></i>";
-        } else {
-            content.outerHTML = "<i class=\"fa-regular fa-moon fa-xl\"></i>";
-        }
-
+        this.classList.toggle("day-night-active")
     }
+
+    const icon = dayNightBtn.querySelector("i");
+
+    if (icon.classList.contains("night")) {
+        dayNightBtn.classList.add("day-night-active")
+    } else {
+        dayNightBtn.classList.remove("day-night-active")
+    }
+
 }
 
 // Widget Season

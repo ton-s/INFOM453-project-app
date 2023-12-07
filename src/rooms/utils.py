@@ -6,7 +6,7 @@ from sklearn.preprocessing import PolynomialFeatures
 
 from core.utils import get_weather_data, get_season_now, get_state_sun
 from thermo.settings import BASE_DIR
-from rooms.models import LightingData
+from rooms.models import Room, LightingData
 
 
 def prepare_data(data, inside, outside):
@@ -79,7 +79,7 @@ def prepare_data_heating(instance):
     cloudcover = int(weather["current"]["cloudcover"] < 40)  # convert percent cloud cover to binary
 
     transform_data = [
-        0,  # mode night/day
+        int(all(room.night_mode for room in Room.objects.all())),  # mode night/day
         get_state_sun(weather),  # naturel day or night (sun)
         cloudcover,  # cloud cover (clear or covered)
         season[get_season_now()],  # season

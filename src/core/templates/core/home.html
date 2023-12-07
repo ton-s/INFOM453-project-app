@@ -18,9 +18,18 @@
             </div>
         </div>
 
-        <a href="#" id="day-night" class="info">
-            <div><i class="fa-solid fa-sun fa-xl"></i></div>
+        <a hx-post="{% url "change_night_mode" %}" hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+           hx-target="this" hx-swap="innerHTML"
+           id="day-night" class="info">
+            <div>
+                {% if not all_rooms_night_mode %}
+                    <i class="fa-solid fa-sun fa-xl day"></i>
+                {% else %}
+                    <i class="fa-regular fa-moon fa-xl night"></i>
+                {% endif %}
+            </div>
         </a>
+
 
         <a href="#" id="consommation" class="info">
             <div class="type"><i class="fa-solid fa-chart-simple fa-sm"></i></div>

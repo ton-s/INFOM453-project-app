@@ -8,7 +8,14 @@ from thermo.settings import AUTH_USER_MODEL
 class Room(models.Model):
     name = models.CharField(max_length=128)
     slug = models.SlugField(max_length=128, unique=True)
+    night_mode = models.BooleanField(default=False)
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='rooms')
+
+    def toggle_mode(self):
+        """Toggle the night mode status
+        """
+        self.night_mode = not self.night_mode
+        self.save()
 
     def save(self, *args, **kwargs):
         """
