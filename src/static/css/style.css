@@ -292,6 +292,7 @@ nav a span {
     justify-content: center;
     align-items: center;
     transition: 0.8s;
+    cursor: pointer;
 }
 
 #day-night:hover {
