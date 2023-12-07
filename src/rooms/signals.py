@@ -4,7 +4,7 @@ from datetime import datetime
 
 from accounts.models import CustomUser
 from core.consumers import CoreConsumer
-from core.utils import run_model_heating, run_model_lighting, get_notification
+from rooms.utils import run_model_heating, run_model_lighting, get_notification
 from rooms.models import Room, Heating, Lighting, HomeAppliance, HeatingData, LightingData, Notification
 
 
