@@ -60,10 +60,11 @@ def send_message_brightness(sender, instance, created, **kwargs):
 
     if not created and last_lighting:
 
-        if float(last_lighting.brightness_inside) != float(instance.brightness_inside):
+        if float(last_lighting.brightness_inside) != float(instance.brightness_inside) \
+                or last_lighting.close_curtains != instance.close_curtains:
             message = dict()
             message[instance.lighting.room.slug] = {"light": instance.brightness_inside,
-                                                    "curtains": instance.open_curtains}
+                                                    "curtains": instance.close_curtains}
 
             print(f"Data sent: {message}")
 

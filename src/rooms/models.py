@@ -17,6 +17,12 @@ class Room(models.Model):
         self.night_mode = not self.night_mode
         self.save()
 
+        last_lighting_data = self.d_lighting.lighting_data.last()
+        if self.night_mode:
+            _ = last_lighting_data.change_brightness(0, True)
+        else:
+            _ = last_lighting_data.change_brightness(20)
+
     def save(self, *args, **kwargs):
         """
         Save the new room with a unique slug
@@ -56,19 +62,24 @@ class LightingData(models.Model):
     brightness_outside = models.FloatField()  # lux
     brightness_inside = models.FloatField()  # lumen
     brightness_desired = models.FloatField(blank=True, null=True)  # lumen
-    open_curtains = models.BooleanField(default=False)
+    close_curtains = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
     lighting = models.ForeignKey(Lighting, on_delete=models.CASCADE, related_name='lighting_data')
 
     MAX_BRIGHTNESS_INSIDE = 250  # lumen
     MAX_BRIGHTNESS_OUTSIDE = 10000  # lux
 
-    def change_brightness(self, value):
+    def change_brightness(self, value, curtains=False):
         self.brightness_desired = value
         self.brightness_inside = value
+        self.close_curtains = curtains
         self.save()
 
         return self.brightness_desired
+
+    def set_curtains(self, value):
+        self.close_curtains = value
+        self.save()
 
     def get_type_brightness(self):
         """Get an outdoor brightness type
