@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Consommation électrique{% endblock %}
+
+{% block content %}
+    <div id="chartConsumption" class="chart"></div>
+    <script>
+        window.onload = function () {
+            let chartConsumption = new CanvasJS.Chart("chartConsumption", {
+                theme: "light2",
+                animationEnabled: true,
+                title: {
+                    text: "Consommation électrique",
+                    margin: 20,
+                    fontSize: 19,
+                },
+                axisX: {
+                    title: "Heure",
+                },
+                axisY: {
+                    title: "Consommation (kWh)",
+                },
+                data: [
+                    {% for key, value in electric_data.items %}
+                        {
+                            type: "spline",
+                            color: "{{colors|random}}",
+                            dataPoints: {{value|safe}},
+                            xValueType: "dateTime",
+                            toolTipContent: "Heure: {x}<br/>Consommation: {y} kWh",
+                            showInLegend: true,
+                            legendText: "{{key|safe}}"
+                        },
+                    {% endfor %}
+                ]
+            });
+
+
+            chartConsumption.render();
+        }
+
+    </script>
+{% endblock %}
+```

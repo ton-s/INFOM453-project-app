@@ -53,7 +53,11 @@ def room(request, slug):
             "chart_data_2": chart_data_2,
             "chart_data_2_threshold": chart_data_2_threshold,
         }
-
+        print("#######################CHART DATA#######################")
+        print(chart_data_1)
+        print(chart_data_1_threshold)
+        print("#######################CHART DATA#######################")
+        
         return render(request, 'rooms/room.html', context=context)
 
     else:

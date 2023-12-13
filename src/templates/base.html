@@ -29,7 +29,7 @@
                 <i class="fa-solid fa-house fa-fw"></i>
                 <span>Tableau de bord</span>
             </a>
-            <a class="btn {% if request.resolver_match.url_name == 'consommation' %} active-link {% endif %}" href="">
+            <a class="btn {% if request.resolver_match.url_name == 'consommation' %} active-link {% endif %}" href="{% url 'consumption' %}">
                 <i class="fa-solid fa-chart-simple fa-faw"></i>
                 <span>Consommation</span>
             </a>
