@@ -1,0 +1,14 @@
+<div class="link-consumption">
+    <a href="{% url 'electric_consumption' %}"
+       {% if request.resolver_match.url_name == 'electric_consumption' %}
+       style="background: var(--color-btn)"
+       {% endif %}>
+        Électricité
+    </a>
+    <a href="{% url 'heating_consumption' %}"
+       {% if request.resolver_match.url_name == 'heating_consumption' %}
+       style="background: var(--color-btn)"
+       {% endif %}>
+        Chauffage
+    </a>
+</div>

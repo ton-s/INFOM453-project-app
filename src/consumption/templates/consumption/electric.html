@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% include 'consumption/consumption.html' %}
+
+    <div class="consumption">
+        <p class="title-2">Générale</p>
+
+        <div id="chartConsumptionLight" class="chart"></div>
+        <div id="chartConsumptionDistribution" class="chart"></div>
+    </div>
+
+    <div class="consumption">
+        <p class="title-2">Appareil Électroménager</p>
+
+        <div id="chartConsumptionHA" class="chart"></div>
+    </div>
+
+
+    <script>
+        window.onload = function () {
+            let chartConsumptionLight = new CanvasJS.Chart("chartConsumptionLight", {
+                theme: "light2",
+                animationEnabled: true,
+                title: {
+                    text: "Consommation Électrique Globale",
+                    margin: 20,
+                    fontSize: 19,
+                },
+                axisX: {
+                    title: "Date",
+                },
+                axisY: {
+                    title: "Kwh",
+                },
+                data: [{
+                    type: "spline",
+                    color: "#ffd803",
+                    dataPoints: {{ global_lighting_chart_data|safe }},
+                    xValueType: "dateTime",
+                    toolTipContent: "Date: {x}<br/>Kwh: {y}",
+                    showInLegend: true,
+                    legendText: "réel"
+                }, {
+                    type: "spline",
+                    color: "#737373",
+                    lineDashType: "dash",
+                    dataPoints: {{ global_lighting_chart_data_threshold|safe }},
+                    xValueType: "dateTime",
+                    toolTipContent: "Date: {x}<br/>Consommation: {y} Kwh",
+                    showInLegend: true,
+                    legendText: "seuil limite"
+                }]
+            });
+
+            let chartConsumptionDistribution = new CanvasJS.Chart("chartConsumptionDistribution", {
+                theme: "light2",
+                animationEnabled: true,
+                title: {
+                    text: "Répartition Électricité Globale (mensuel)",
+                    margin: 20,
+                    fontSize: 19,
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: -90,
+                    yValueFormatString: "#,###'%'",
+                    dataPoints: [
+                        {"label": "Éclairage", "y": 18},
+                        {"label": "Machine à laver", "y": 20},
+                        {"label": "Autres", "y": 62},
+                    ]
+                }]
+            });
+
+
+            let chartConsumptionHA = new CanvasJS.Chart("chartConsumptionHA", {
+                theme: "light2",
+                animationEnabled: true,
+                title: {
+                    text: "Consommation Électrique Appareil Électro.",
+                    margin: 20,
+                    fontSize: 19,
+                },
+                axisX: {
+                    title: "Date",
+                },
+                axisY: {
+                    title: "Watt",
+                },
+                data: [
+                    {% for key, value in home_appliance_chart_data.items %}
+                        {
+                            type: "line",
+                            color: `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`,
+                            dataPoints: {{ value|safe }},
+                            xValueType: "dateTime",
+                            toolTipContent: "Date: {x}<br/>Consommation: {y} Watt<br/>Mode: {mode}",
+                            showInLegend: true,
+                            legendText: "{{ key|safe }}"
+                        },
+                    {% endfor %}
+                ]
+            });
+
+
+            chartConsumptionLight.render()
+            chartConsumptionHA.render()
+            chartConsumptionDistribution.render()
+        }
+
+    </script>
+
+{% endblock %}

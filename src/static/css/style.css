@@ -458,3 +458,34 @@ nav a span {
         width: 100%;
     }
 }
+
+/**** CONSUMPTION ****/
+
+.link-consumption {
+    display: flex;
+    border-radius: 12px;
+    padding: 4px 4px 4px 4px;
+    background-color: var(--color-background);
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.link-consumption a {
+    text-align: center;
+    width: 100%;
+    border-radius: 12px;
+    padding: 12px 0px 12px 10px;
+    color: var(--color-txt);
+    background-color: var(--color-background);
+}
+
+.link-consumption a:hover {
+    filter: brightness(0.7);
+}
+
+.consumption {
+    margin-top: 35px;
+}
+
+.consumption .title-2 {
+    margin-bottom: 15px;
+}

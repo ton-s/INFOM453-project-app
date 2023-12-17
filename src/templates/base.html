@@ -29,7 +29,8 @@
                 <i class="fa-solid fa-house fa-fw"></i>
                 <span>Tableau de bord</span>
             </a>
-            <a class="btn {% if request.resolver_match.url_name == 'consommation' %} active-link {% endif %}" href="">
+            <a class="btn {% if 'consumption' in request.resolver_match.url_name %} active-link {% endif %}"
+               href="{% url 'electric_consumption' %}">
                 <i class="fa-solid fa-chart-simple fa-faw"></i>
                 <span>Consommation</span>
             </a>
@@ -63,8 +64,6 @@
             {% if not request.resolver_match.kwargs %}
                 {% if request.resolver_match.url_name == 'index' %}
                     Tableau de bord
-                {% else %}
-                    Consommation
                 {% endif %}
             {% else %}
                 {{ room.name|capfirst }}
