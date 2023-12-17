@@ -17,7 +17,7 @@ def prepare_data(data, inside, outside):
     - data: QuerySet (ex: heating_data or heating_data)
     - inside (str): Character string representing the name of the data field inside (ex: "temperature_inside").
     - outside (str): Character string representing the name of the data field outside (ex: "temperature_outside")
-    - y_pourcent
+
     Returns
     -------
     - chart_data (list of dict): data inside, with the key 'x' (timestamp) et 'y' (value inside)
