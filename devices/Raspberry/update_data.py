@@ -72,7 +72,8 @@ def get_changed(observable):
         return True
     else:
         return False
-
+    
+# Méthode qui met à jour les données du fichier json
 def update_data_observer(user_input):
     global machine_lock
     global remaining_wash_time
@@ -89,16 +90,15 @@ def update_data_observer(user_input):
         temp_value_sdb = input("Enter the temperature (°C) : ")
         light_value = input("Enter the brightness (Lumens) : ")
         slider_value = input("Enter the slider value (%) : ")
-    
+    # Valeurs réelles
     else:
-        #if not machine_lock:
         temp_value_salon = temperature_observable.update_temperature(tempsensor1)
         temp_value_cuisine = temperature_observable.update_temperature(tempsensor1)
         temp_value_chambre = temperature_observable2.update_temperature(tempsensor2)
         temp_value_sdb = temperature_observable3.update_temperature(tempsensor3)
         light_value = light_observable.update_light(lightSensor)
         slider_value = slider_observable.update_slider(slider)
-
+    # Gestion de la machine à laver
     if not machine_lock and remaining_wash_time == 0:
         if 0 < float(slider_value) < 0.33:
             mode = "eco"
@@ -127,31 +127,7 @@ def update_data_observer(user_input):
         power = ""
     print("Temps de lavage : ", remaining_wash_time)
 
-    """
-    # Créez un dictionnaire Python avec ces valeurs, en utilisant des clés pour chaque capteur
-    data = {
-        "salon": {
-            "temperature": str(temp_value_salon),
-            "light": str(light_value)
-        },
-        "cuisine": {
-            "temperature": str(temp_value_cuisine),
-            "light": str(light_value)
-        },
-        "chambre": {
-            "temperature": str(temp_value_chambre),
-            "light": str(light_value)
-        },
-        "salle-de-bain": {
-            "temperature": str(temp_value_sdb),
-            "light": str(light_value),
-            "homeappliance": {
-                #"machine-a-laver": [] if machine_lock else [mode, power, time_work]
-                "machine-a-laver": [mode, power, time_work]
-            }
-        }
-    }"""
-
+    # Initialisation de l'appartement
     # Exemple d'utilisation
     mach1 = Machine("machine-a-laver", mode, power, time_work)
     room1 = RoomData("salon", temp_value_salon, light_value)
@@ -161,12 +137,12 @@ def update_data_observer(user_input):
 
     # Utilisez set_machine uniquement pour les pièces avec un appareil électroménager
     room3.set_machine(mach1)
-
+    # Mes pièces
     rooms = [room1, room2, room3, room4]
-
+    # L'appartement
     house = House(rooms)
     data2 = house.to_dict()
-
+    # Pour simuler le temps qui passe (timework)
     if remaining_wash_time > 0:
         remaining_wash_time -= 10
 
@@ -178,6 +154,3 @@ def update_data_observer(user_input):
         json.dump(data2, json_file, indent=4)  # indent est utilisé pour une sortie formatée
 
     print(f"Données enregistrées dans {json_filename}")
-
-    # L'attente de 5 secondes doit être en dehors de la boucle des données
-    #time.sleep(1)  # Déplacez cette ligne en dehors de la boucle while
