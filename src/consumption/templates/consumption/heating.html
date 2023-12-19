@@ -22,30 +22,28 @@
                     fontSize: 19,
                 },
                 axisX: {
-                    title: "Heure",
+                    title: "Date",
+                    interval: 1,
+                    intervalType: "month",
+                    valueFormatString: "MMM",
                 },
                 axisY: {
                     title: "Consommation (L)",
                 },
                 data: [
-                    {% for key, value in heating_data.items %}
-                        {
-                            type: "column",
-                            color: "{{colors|random}}",
-                            dataPoints: {{value|safe}},
-                            xValueType: "dateTime",
-                            toolTipContent: "Heure: {x}<br/>Consommation: {y}L",
-                            showInLegend: true,
-                            legendText: "{{key|safe}}"
-                        },
-                    {% endfor %}
+                    {
+                        type: "column",
+                        color: "{{colors|random}}",
+                        dataPoints: {{heating_data|safe}},
+                        toolTipContent: "Month: {label}<br/>Consommation: {y}L",
+                        showInLegend: true,
+                        legendText: "Consommation"
+                    },
                 ]
             });
-
-
+    
             chartConsumption.render();
         }
-
     </script>
 
 

@@ -3,6 +3,32 @@ import random
 
 from rooms.models import HomeAppliance
 
+def prepare_data_consumption_heating(rooms):
+    heating_consumption = 0
+    consumptionByMonth = {"Jan": 0, "Feb": 0, "Mar": 0, "Apr": 0, "May": 0, "Jun": 0, "Jul": 0, "Aug": 0, "Sep": 0,
+                            "Oct": 0, "Nov": 0, "Dec": 0}
+    if rooms.exists():
+        for room in rooms:
+            heating_datas = room.d_heating.heating_data.all()
+            if heating_datas.exists():
+                for heating_data in heating_datas:
+                    temperature_inside = heating_data.temperature_inside
+                    temperature_targeted = heating_data.temperature_desired
+                    starting_time = heating_data.timestamp
+                    month = setTimestampToMonth(starting_time)
+                    room_volume = 30 * 2.5  # room surface * room height
+                    heating_type = 'oil'
+                    heating_consumption = heating_consumption_calculator(heating_type, temperature_inside,
+                                                                            temperature_targeted, room_volume,
+                                                                            starting_time)
+                    consumptionByMonth[month] += heating_consumption
+    data_points = [{"label": month, "y": consumption} for month, consumption in consumptionByMonth.items()]
+    
+    return data_points
+def setTimestampToMonth(timestamp):
+    #cast timestamp to datetime object
+    month = datetime.datetime.fromtimestamp(timestamp.timestamp()).strftime('%b')
+    return month
 
 def prepare_data_consumption_lighting(f_a, f_b):
     data = []
