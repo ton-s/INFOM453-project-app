@@ -33,7 +33,7 @@
                 data: [
                     {
                         type: "column",
-                        color: "{{colors|random}}",
+                        color: `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`,
                         dataPoints: {{heating_data|safe}},
                         toolTipContent: "Month: {label}<br/>Consommation: {y}L",
                         showInLegend: true,
