@@ -1,12 +1,15 @@
 import datetime
 import random
+import requests
+from consumption.models import HeatingPrices
+from bs4 import BeautifulSoup
 
 from rooms.models import HomeAppliance
 
 def prepare_data_consumption_heating(rooms):
     heating_consumption = 0
-    consumptionByMonth = {"Jan": 0, "Feb": 0, "Mar": 0, "Apr": 0, "May": 0, "Jun": 0, "Jul": 0, "Aug": 0, "Sep": 0,
-                            "Oct": 0, "Nov": 0, "Dec": 0}
+    consumptionByMonth = {"Jan": 250, "Feb": 224, "Mar": 203, "Apr": 180, "May": 132, "Jun": 90, "Jul": 69, "Aug": 74, "Sep": 120,
+                            "Oct": 197, "Nov": 224, "Dec": 238}
     if rooms.exists():
         for room in rooms:
             heating_datas = room.d_heating.heating_data.all()
@@ -23,12 +26,52 @@ def prepare_data_consumption_heating(rooms):
                                                                             starting_time)
                     consumptionByMonth[month] += heating_consumption
     data_points = [{"label": month, "y": consumption} for month, consumption in consumptionByMonth.items()]
+    print(data_points)
     
     return data_points
+
 def setTimestampToMonth(timestamp):
     #cast timestamp to datetime object
     month = datetime.datetime.fromtimestamp(timestamp.timestamp()).strftime('%b')
     return month
+
+def prepare_data_heating_price(prices):
+    get_today_data = True
+    all_dates = ["2023-12-21","2023-12-14","2023-12-07","2023-11-30","2023-11-23","2023-11-16","2023-11-09","2023-11-02","2023-10-26","2023-10-19","2023-10-12","2023-10-05","2023-09-28","2023-09-21","2023-09-14","2023-09-07"]
+    all_prices = ["0.91860","0.87820","0.93600","0.97140","0.96460","0.98520","1.00730","1.01590","1.02530","1.05890","1.04030","1.08120","1.08340","1.09890","1.11860","1.07120"]
+    if prices.exists():
+        all_dates.reverse()
+        all_prices.reverse()
+        get_today_data = False
+        for thisprice in prices : 
+            all_prices.append(float(thisprice.price))
+            all_dates.append(str(thisprice.date))
+            #if thisprice.date is older than 7 days, get_today_data = true
+            if thisprice.date < datetime.date.today() - datetime.timedelta(days=7):
+                get_today_data = True
+    
+    if get_today_data:
+        url = "https://petrolprices.economie.fgov.be/petrolprices/?locale=fr"
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            data_element = soup.find('tr', {'class': 'ui-widget-content ui-datatable-odd second-row', 'data-ri':"3"})
+            data_element = data_element.find('td', {'role': 'gridcell', "style": "text-align: center;width:25%;border:none!important;"}).get_text(strip=True)
+            new_price = data_element.replace(",", ".")
+            new_price = ''.join(c for c in new_price if c.isdigit() or c in {'.', ','})
+            today_date = datetime.date.today()
+            all_prices.append(new_price)
+            all_dates.append(today_date)
+            new_entry = HeatingPrices(date=today_date, price=new_price)
+            new_entry.save()
+        else :
+            print("error")
+
+    data_points = [{"label": str(date), "y": float(price)} for date,price in zip(all_dates,all_prices)]
+    print(data_points)
+    
+    return data_points
 
 def prepare_data_consumption_lighting(f_a, f_b):
     data = []
@@ -99,7 +142,6 @@ def heating_consumption_calculator(heating_type, current_temp, target_temp, room
     heating_power_needed = heating_power_needed / 3600000  # in kilowatts
 
     # calculate the consumption
-    print(heating_time, heating_power_needed)
     consumption = (heating_power_needed * heating_time) / mean_lower_heating_volume  # in L
 
     return consumption

@@ -1,9 +1,9 @@
 from django.shortcuts import render
 
 from consumption.utils import prepare_data_consumption_lighting, prepare_data_consumption_home_appliance, \
-    heating_consumption_calculator, prepare_data_consumption_heating
+     prepare_data_consumption_heating, prepare_data_heating_price
 from rooms.models import Room
-
+from consumption.models import HeatingPrices
 
 def electric_consumption(request):
     # electric global
@@ -22,8 +22,10 @@ def electric_consumption(request):
 def heating_consumption(request):
    
     all_rooms = Room.objects.all()
+    all_prices = HeatingPrices.objects.all()
     heating_datas = prepare_data_consumption_heating(all_rooms)
+    heating_prices = prepare_data_heating_price(all_prices)
 
-    context = {"heating_data": heating_datas}
+    context = {"heating_data": heating_datas, "heating_prices": heating_prices}
 
     return render(request, 'consumption/heating.html', context=context)

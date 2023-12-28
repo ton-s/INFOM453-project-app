@@ -8,6 +8,7 @@
         <p class="title-2">Générale</p>
 
         <div id="chartConsumption" class="chart"></div>
+        <div id="chartHeatingPrices" class="chart"></div>
     </div>
 
 
@@ -22,7 +23,6 @@
                     fontSize: 19,
                 },
                 axisX: {
-                    title: "Date",
                     interval: 1,
                     intervalType: "month",
                     valueFormatString: "MMM",
@@ -36,13 +36,34 @@
                         color: `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`,
                         dataPoints: {{heating_data|safe}},
                         toolTipContent: "Month: {label}<br/>Consommation: {y}L",
-                        showInLegend: true,
-                        legendText: "Consommation"
                     },
                 ]
             });
+
+            let chartHeatingPrices = new CanvasJS.Chart("chartHeatingPrices", {
+                theme: "light2",
+                animationEnabled: true,
+                title: {
+                    text: "Prix du mazout de chauffage < 2000L",
+                    margin: 20,
+                    fontSize: 19,
+                },
+                axisY: {
+                    title: "Prix (€/L)",
+                },
+                data: [
+                {
+                    type: "spline",
+                    color: "#ffd803",
+                    dataPoints: {{ heating_prices|safe }},
+                    xValueType: "dateTime",
+                    toolTipContent: "Date: {label}<br/>Prix: {y}",
+                }]
+            });
+
     
             chartConsumption.render();
+            chartHeatingPrices.render();
         }
     </script>
 
