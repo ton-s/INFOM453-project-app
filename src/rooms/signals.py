@@ -102,8 +102,6 @@ def heating_detection_algorithm(sender, instance, created, **kwargs):
             if temp_change_outside > 2 or temp_change_inside > 2 or temp_change_desired > 2:
 
                 prediction = run_model_heating(instance)
-                # print(last_heating)
-                # print(prediction)
 
                 if int(instance.temperature_desired) != int(prediction):
                     # create a heating notification
@@ -133,9 +131,6 @@ def lighting_detection_algorithm(sender, instance, created, **kwargs):
                     or brightness_change_inside >= (LightingData.MAX_BRIGHTNESS_INSIDE * 0.1):
 
                 prediction = run_model_lighting(instance)
-                print(last_lighting)
-                print(f"Lighting: {prediction}")
-                # TODO - gérer les rideaux
 
                 if int(instance.brightness_inside) != int(prediction):
                     # create a lighting notification
