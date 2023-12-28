@@ -75,4 +75,6 @@ pass
 
 ## Déploiement
 
-pass
+Les informations suivantes serviront d'aide au déploiement du projet Django (application web):
+- D'abord, je vous réfère à la documentation de Django au niveau du déploiement afin d'avoir l'ensemble des étapes et bonnes pratiques.
+https://docs.djangoproject.com/fr/4.1/howto/deployment/
