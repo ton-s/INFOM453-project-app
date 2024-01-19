@@ -4,7 +4,7 @@ Projet en informatique ambiante et mobile
 
 ## EcoTherm
 
-EcoTherm est une application connectée conçue pour la gestion d'un thermostat intelligent. Elle offre la possibilité de contrôler la température, l'éclairage et la consommation énergétique de votre appartement. (à complèter) 
+Afin de répondre aux attentes du persona, le projet propose un thermostat intelligent baptisé EcoTherm, conçu pour la gestion automatisée de divers aspects d'une habitation par le biais de la domotique. Accessible via une interface web sur ordinateur ou mobile, EcoTherm permet de réguler le chauffage, l'éclairage, ainsi que les appareils électroménagers spécifiques à chaque pièce de la maison, tout en surveillant la consommation globale. L'application EcoTherm offre également des conseils personnalisés pour aider l'utilisateur à optimiser la gestion énergétique de son logement. En facilitant l'accès et l'interprétation des données de consommation à travers des graphiques clairs, EcoTherm permet à l'utilisateur de suivre et de recevoir des recommandations pour interagir de manière éco-responsable avec son domicile, minimisant ainsi son impact sur l'environnement.
 
 ## Démarrage (mode développement)
 
