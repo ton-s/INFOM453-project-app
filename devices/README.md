@@ -1,78 +1,20 @@
-# INFOM453-project-app
+# Appareils connectés
 
-Projet en informatique ambiante et mobile
+## Overview
+Ce répertoire contient l'ensemble des programmes côté appareils connectés nécessaires pour collecter et transmettre des données telles que la température, la luminosité, et d'autres informations externe. Ces programmes sont conçus pour assurer la communication entre les appareils et l'application, permettant ainsi la collecte et l'envoi des données pour diverses analyses ou utilisations.
 
-## EcoTherm
+## Contenu
 
-EcoTherm est une application connectée conçue pour la gestion d'un thermostat intelligent. Elle offre la possibilité de contrôler la température, l'éclairage et la consommation énergétique de votre appartement. (à complèter) 
-
-## Démarrage (mode développement)
-
-Ces instructions vous donneront une copie du projet opérationnel sur votre machine locale à des fins de développement et de test.
-
-### Pré-requis
-
-- Python 3.10+
-- Django 4.2+
-- un environnement virtuel (ex: venv)
-
-### Installation
-
-Si vous souhaitez utiliser le projet, suivez ces instructions.
-
-- Rendez-vous sur le terminal et clonez le dépôt GitHub :
-
-```shell
-git clone https://github.com/ton-s/INFOM453-project-app.git
+```
+arduino/ - Contient le code relatif à l'Arduino
+    lights_and_motor.ino - *Fichier ino* qui contient le code de l'Arduino pour gérer les mises à jour des lampes dans chaque pièce, ainsi que le moteur pour ouvrir et fermer la fenêtre de la chambre
+    
+raspberry/ - Contient le code relatif à l'Arduino
+    arduino.py - *Fichier python* qui contient la fonction d'envoi des données depuis l'application à l'Arduino
+    classes.py - *Fichier python* qui contient les classes permettant de mettre à jour les données récoltées par les différents capteurs si un seuil est dépassé (Pattern Observer)
+    client_error.py - *Fichier python* qui contient la connexion du côté client de l'application et donc permet au Raspberry de se connecter à l'applicaiton
+    sensor_data.json - *Fichier json* qui contient les données des capteurs (température, luminosité, slider)
+    server.py - *Fichier python TEST* qui contient la connexion du côté serveur pour tester la connexion client-serveur en local
+    update_data.py - *Fichier python* qui contient toutes les fonctions nécessaires à la mise à jour des données dans le fichier json
 ```
 
-- Ensuite, aller dans le répertoire du projet et créer un environnement virtuel :
-
-```shell
-cd src
-python -m venv env
-./env/Scripts/activate (Windows)
-source ./env/bin/activate (Linux)
-```
-
-- Installer les dépendances Python à partir de la racine du dépôt :
-
-```shell
-pip install -r requirements.txt
-```
-
-- Maintenant, nous allons appliquer les migrations à la base de données :
-
-```shell
-python manage.py makemigrations
-python manage.py migrate
-```
-
-### Configuraton
-
-- Créer un super utilisateur afin d'avoir accès au panneau administration de Django :
-
-```shell
-python manage.py createsuperuser
-```
-
-Après avoir executé cette commande, suiver les instructions affichées dans le terminal.
-
-- Connectez-vous ensuite au panneau d'administration en accédant à `/admin` sur votre navigateur
-
-### Exécution
-
-- Utiliser la commande suivant pour lancer le serveur en mode développement :
-
-```shell
-python manage.py runserver
-```
-
-Accèder au site sur le serveur local à l'adresse suivante :  http://localhost:8000
-
-## Test
-pass
-
-## Déploiement
-
-pass
