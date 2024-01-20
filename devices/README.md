@@ -7,7 +7,7 @@ Ce répertoire contient l'ensemble des programmes côté appareils connectés n�
 ```
 devices/
     arduino/ - Contient le code relatif à l'Arduino
-        lights_and_motor.ino - *Fichier ino* qui contient le code de l'Arduino pour gérer les mises à jour des lampes dans chaque pièce, ainsi que le moteur pour             ouvrir et fermer la fenêtre de la chambre
+        lights_and_motor.ino - *Fichier ino* qui contient le code de l'Arduino pour gérer les mises à jour des lampes dans chaque pièce, ainsi que le moteur pour ouvrir et fermer la fenêtre de la chambre
     raspberry/ - Contient le code relatif à l'Arduino
         arduino.py - *Fichier python* qui contient la fonction d'envoi des données depuis l'application à l'Arduino
         classes.py - *Fichier python* qui contient les classes permettant de mettre à jour les données récoltées par les différents capteurs si un seuil est dépassé          (Pattern Observer)
