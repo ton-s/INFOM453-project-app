@@ -76,21 +76,7 @@ def get_changed(observable):
 def update_data_observer(user_input):
     global machine_lock
     global remaining_wash_time
-    # On gère le cas où on veut donner les data nous même (Testing)
-    """if user_input == "test":
-        # On demande la température de chaque pièce
-        print("Salon")
-        temp_value_salon = input("Enter the temperature (°C) : ")
-        print("Cuisine")
-        temp_value_cuisine = input("Enter the temperature (°C) : ")
-        print("Chambre")
-        temp_value_chambre = input("Enter the temperature (°C) : ")
-        print("Salle de bain")
-        temp_value_sdb = input("Enter the temperature (°C) : ")
-        light_value = input("Enter the brightness (Lumens) : ")
-        slider_value = input("Enter the slider value (%) : ")"""
     # Valeurs réelles
-    #else:
     temp_value_salon = temperature_observable.update_temperature(tempsensor1)
     temp_value_cuisine = temperature_observable.update_temperature(tempsensor1)
     temp_value_chambre = temperature_observable2.update_temperature(tempsensor2)
