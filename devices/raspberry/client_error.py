@@ -1,16 +1,13 @@
-import time
 import json
 import asyncio
 import websockets
 from update_data import *
-#from arduino import *
+from arduino import *
 
 # Configuration de l'URL WebSocket
 #websocket_url = "ws://localhost:8765/"
-websocket_url = "ws://192.168.1.14/ws/"
-
-# On demande le mode d'exécution
-mode = input("Execution mode (test/real): ")
+#websocket_url = "ws://192.168.1.14/ws/"
+websocket_url = "ws://192.168.74.144/ws/"
 
 # Fonction asynchrone qui gère l'envoie de données (client)
 async def main():
@@ -22,10 +19,7 @@ async def main():
                     # Chargez les nouvelles données depuis le fichier JSON
                     with open("sensor_data.json", 'r') as json_file:
                         # Mise à jour des données des capteurs
-                        if mode == "test":
-                            update_data_observer("test")
-                        else:
-                            update_data_observer("real")
+                        update_data_observer("real")
                         # Chargez les nouvelles données
                         new_data = json.load(json_file)
 
@@ -57,8 +51,11 @@ async def main():
                         room = list(received_data.keys())[0]
                         light_intensity = received_data[room]["light"]
                         action_motor = received_data[room]["curtains"]
-                        print(room, light_intensity, action_motor)
-                        #send_intensity(room, light_intensity, action_motor)
+                        print(type(room), room, type(light_intensity), light_intensity, type(action_motor), action_motor)
+                        # Caster en int pour pas récupérer un float
+                        # Si on envoie une seule fois ça ne marche pas
+                        send_intensity(room, int(light_intensity), action_motor)
+                        send_intensity(room, int(light_intensity), action_motor)
                     except TimeoutError:
                         print("Timeout Error : Pas de messages reçus par le serveur")
 

@@ -1,4 +1,4 @@
-# Ce fichier nous permettait de tester la connexion client-serveur entre le raspberry et un serveur en local
+#!/usr/bin/env python
 
 import asyncio
 from websockets.server import serve

@@ -3,7 +3,6 @@ from Phidget22.Phidget import *
 from Phidget22.Devices.LightSensor import *
 from Phidget22.Devices.TemperatureSensor import *
 from Phidget22.Devices.VoltageRatioInput import *
-import time
 import json
 from classes import *
 
@@ -78,7 +77,7 @@ def update_data_observer(user_input):
     global machine_lock
     global remaining_wash_time
     # On gère le cas où on veut donner les data nous même (Testing)
-    if user_input == "test":
+    """if user_input == "test":
         # On demande la température de chaque pièce
         print("Salon")
         temp_value_salon = input("Enter the temperature (°C) : ")
@@ -89,15 +88,15 @@ def update_data_observer(user_input):
         print("Salle de bain")
         temp_value_sdb = input("Enter the temperature (°C) : ")
         light_value = input("Enter the brightness (Lumens) : ")
-        slider_value = input("Enter the slider value (%) : ")
+        slider_value = input("Enter the slider value (%) : ")"""
     # Valeurs réelles
-    else:
-        temp_value_salon = temperature_observable.update_temperature(tempsensor1)
-        temp_value_cuisine = temperature_observable.update_temperature(tempsensor1)
-        temp_value_chambre = temperature_observable2.update_temperature(tempsensor2)
-        temp_value_sdb = temperature_observable3.update_temperature(tempsensor3)
-        light_value = light_observable.update_light(lightSensor)
-        slider_value = slider_observable.update_slider(slider)
+    #else:
+    temp_value_salon = temperature_observable.update_temperature(tempsensor1)
+    temp_value_cuisine = temperature_observable.update_temperature(tempsensor1)
+    temp_value_chambre = temperature_observable2.update_temperature(tempsensor2)
+    temp_value_sdb = temperature_observable3.update_temperature(tempsensor3)
+    light_value = light_observable.update_light(lightSensor)
+    slider_value = slider_observable.update_slider(slider)
     # Gestion de la machine à laver
     if not machine_lock and remaining_wash_time == 0:
         if 0 < float(slider_value) < 0.33:
