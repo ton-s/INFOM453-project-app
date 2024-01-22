@@ -17,3 +17,34 @@ devices/
         update_data.py - *Fichier python* qui contient toutes les fonctions nécessaires à la mise à jour des données dans le fichier json
 ```
 
+## Pré-requis pour utiliser les devices
+
+```
+pip install pyserial (Arduino)
+pip install Phidget22 (Raspberry)
+pip install asyncio (Client-Serveur)
+pip install websockets (Client-Serveur)
+```
+
+## Initialisation du Raspberry Pi 4
+Guide d'installation : https://www.raspberrypi.com/documentation/computers/getting-started.html 
+
+## Lancement de la partie Raspberry Pi 4
+- Lancer la connexion ssh (avec id = identifiant)
+    _ssh id@raspberrypi.local_
+- Lancer du serveur VNC virtuel
+    _vncserver-virtual_
+- Ouvrir de l'application RealVNC Viewer
+- Saisir l'adresse IP donné dans le terminal où le serveur virtuel a été lancé
+    _192.162.x.x_
+- Connexion à l'interface du Raspberry Pi 4 (avec identifiant et mot de passe)
+- Lancement du code depuis un IDE supportant Python (VSCode)
+- Créer un environnement virtuel
+    _python venv env_
+- Installer les dépendances nécessaires (voir plus haut)
+    _pip install ..._
+- Lancer le fichier "client_error.py"
+    _python client_error.py_
+
+## Initialisation de l'Arduino
+Guide d'installation : https://www.arduino.cc/en/Guide 
