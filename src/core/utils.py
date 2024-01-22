@@ -23,11 +23,10 @@ def get_weather_data(city="Namur"):
     if "error" in weather_data:
         print("Expired key !!!!")
         # Json type au cas où la clé de l'API expire
-        weather_data_type = {'request': {'type': 'City', 'query': 'Namur, Belgium', 'language': 'en', 'unit': 'm'},
+        weather_data = {'request': {'type': 'City', 'query': 'Namur, Belgium', 'language': 'en', 'unit': 'm'},
                              'location': {'name': 'Namur', 'country': 'Belgium', 'region': '', 'lat': '50.467', 'lon': '4.867', 'timezone_id': 'Europe/Brussels', 'localtime': '2024-01-22 16:40', 'localtime_epoch': 1705941600, 'utc_offset': '1.0'},
                              'current': {'observation_time': '03:40 PM', 'temperature': 9, 'weather_code': 116, 'weather_icons': ['https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0002_sunny_intervals.png'], 'weather_descriptions': ['Partly cloudy'], 'wind_speed': 33, 'wind_degree': 250, 'wind_dir': 'WSW', 'pressure': 1013, 'precip': 0, 'humidity': 66, 'cloudcover': 75, 'feelslike': 5, 'uv_index': 2, 'visibility': 10, 'is_day': 'yes'}
                              }
-        weather_data = weather_data_type
     
     return weather_data
 
