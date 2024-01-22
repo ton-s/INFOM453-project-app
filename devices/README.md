@@ -31,20 +31,35 @@ Guide d'installation : https://www.raspberrypi.com/documentation/computers/getti
 
 ## Lancement de la partie Raspberry Pi 4
 - Lancer la connexion ssh (avec id = identifiant)
-    _ssh id@raspberrypi.local_
+```shell
+ssh id@raspberrypi.local
+```
 - Lancer du serveur VNC virtuel
-    _vncserver-virtual_
+```shell
+vncserver-virtual
+```
 - Ouvrir de l'application RealVNC Viewer
 - Saisir l'adresse IP donné dans le terminal où le serveur virtuel a été lancé
-    _192.162.x.x_
+```shell
+192.162.x.x
+```
 - Connexion à l'interface du Raspberry Pi 4 (avec identifiant et mot de passe)
 - Lancement du code depuis un IDE supportant Python (VSCode)
-- Créer un environnement virtuel
-    _python venv env_
+- Créer un environnement virtuel et l'activer
+```shell
+cd devices/raspberry
+python -m venv env
+./env/Scripts/activate (Windows)
+source ./env/bin/activate (Linux)
+```
 - Installer les dépendances nécessaires (voir plus haut)
-    _pip install ..._
+```shell
+pip install ...
+```
 - Lancer le fichier "client_error.py"
-    _python client_error.py_
+```shell
+python client_error.py
+```
 
 ## Initialisation de l'Arduino
 Guide d'installation : https://www.arduino.cc/en/Guide 
